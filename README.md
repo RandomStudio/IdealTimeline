@@ -25,7 +25,9 @@ Some aspects of what we need are found in the above examples, but ideally we nee
 
 ## Features Roadmap
 - [x] Layers provide concurrent blocks to be arranged
-- [ ] Blocks should be movable (update start position)
+- [x] Blocks should be movable (update start position)
+- [ ] Blocks should be able to insert (shift later blocks)
+- [ ] Timeline should be zoomable
 - [ ] Blocks should be resizable
 - [ ] Timeline should be playable, i.e. a playhead starts moving
 - [ ] Timelines should be nestable
