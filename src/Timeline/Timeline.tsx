@@ -2,7 +2,7 @@ import React from 'react';
 import Layer, { LayerProps } from './Layer/Layer';
 
 export interface TimelineProps {
-  layers: [ LayerProps ]
+  layers: LayerProps[]
 }
 
 const Timeline: React.FC<TimelineProps> = (props) => {

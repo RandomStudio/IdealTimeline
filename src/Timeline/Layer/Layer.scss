@@ -1,4 +1,15 @@
 .Layer {
-    min-height: 64px;
+    height: 64px;
     background-color: grey;
+
+    .layer-label {
+        position: absolute;
+    }
+
+    .layer-content {
+        height: 64px;
+        position: absolute;
+        left: 128px;
+    }
+
 }
