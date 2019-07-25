@@ -115,6 +115,11 @@ class App extends React.Component<any, IAppState> {
     });
   }
 
+  setPlayhead = (position: number) => {
+    console.log('setPlayhead to position', position);
+    this.setState({ currentPosition: position });
+  }
+
   render = () => (
       <div className="App">
 
@@ -126,6 +131,11 @@ class App extends React.Component<any, IAppState> {
           keyEventName={KEYPRESS}
           keyValue=" "
           onKeyHandle={this.togglePlayback}
+        />
+        <KeyHandler
+          keyEventName={KEYPRESS}
+          keyValue="h"
+          onKeyHandle={() => { this.setPlayhead(0)}}
         />
 
         <main>
