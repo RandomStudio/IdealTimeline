@@ -1,21 +1,23 @@
 import React from 'react';
 import './Layer.scss';
-import Block, { BlockProps } from './Block/Block';
+import Block, { IBlock, IBlockFunctions } from './Block/Block';
 
-export interface LayerProps {
+export interface ILayer {
     id: number,
     name: string;
-    blocks: BlockProps[]
+    blocks: IBlock[]
 }
 
-const Layer: React.FC<LayerProps> = (props) => {
+export interface ILayerProps extends ILayer, IBlockFunctions {}
+
+const Layer: React.FC<ILayerProps> = (props) => {
   return (
     <div className="Layer">
       <div className="layer-label">
         {props.id}: {props.name}
       </div>
       <div className="layer-content">
-        {props.blocks.map(block => <Block {...block} key={block.id} />)}      
+        {props.blocks.map(block => <Block {...block} layerId={props.id} key={block.id} moveBlock={props.moveBlock} />)}      
       </div>
     </div>
   );

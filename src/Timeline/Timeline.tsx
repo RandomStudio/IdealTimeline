@@ -1,11 +1,14 @@
 import React from 'react';
-import Layer, { LayerProps } from './Layer/Layer';
+import Layer, { ILayer } from './Layer/Layer';
+import { IBlockFunctions } from './Layer/Block/Block';
 
-export interface TimelineProps {
-  layers: LayerProps[]
+export interface ITimeline {
+  layers: ILayer[]
 }
 
-const Timeline: React.FC<TimelineProps> = (props) => {
+interface ITimelineProps extends ITimeline, IBlockFunctions {}
+
+const Timeline: React.FC<ITimelineProps> = (props) => {
   const layers = props.layers;
   return (
     <div className="Timeline">
@@ -16,7 +19,7 @@ const Timeline: React.FC<TimelineProps> = (props) => {
         </div>
 
         <div className="layers">
-          {layers.map(layer => <Layer {...layer} key={layer.id} /> )}
+          {layers.map(layer => <Layer {...layer} key={layer.id} moveBlock={props.moveBlock} /> )}
         </div>
 
     </div>
