@@ -1,6 +1,8 @@
 import React from 'react';
 import './App.css';
 import Timeline, { ITimeline } from './Timeline/Timeline';
+//@ts-ignore
+import KeyHandler, { KEYPRESS } from 'react-key-handler';
 
 const dummy = {
   layers: [
@@ -35,19 +37,47 @@ const dummy = {
       ]
     } 
   ],
-  currentPosition: 0
 } as ITimeline;
 
+interface IAppState {
+  timeline: ITimeline,
+  playing: boolean,
+  currentPosition: number,
+}
 
-class App extends React.Component {
+let lastTime: number;
+
+class App extends React.Component<any, IAppState> {
 
   state = {
     timeline: dummy,
-  }
+    playing: false,  
+    currentPosition: 0, 
+  } as IAppState
 
   // updateBlock = (layerId: number, blockId: number, updated: {}) => {
 
   // }
+
+  tick = (now: number) => {
+    requestAnimationFrame(this.tick);
+    if (!lastTime) {
+      lastTime = now;
+    }
+    const delta = now - lastTime;
+    // console.log('now', now, 'delta', delta);
+    if (delta > 1000/60) {
+      lastTime = now;
+      // console.log('tick');
+      if (this.state.playing) {
+        this.setState({ currentPosition: this.state.currentPosition+1 });
+      }
+    }
+  }
+
+  componentDidMount = () => {
+    requestAnimationFrame(this.tick);
+  }
 
   moveBlock = (layerId: number, blockId: number, newStart: number) => {
     // console.log(`moveBlock ${layerId}/${blockId} to x: ${newStart}`);
@@ -71,23 +101,42 @@ class App extends React.Component {
   }
 
   moveTargetPosition = (newPosition: number | null) => {
-    // console.log('moveTargetPosition', newPosition);
     const updateTimeline =  { ...this.state.timeline, targetPosition: newPosition };
     this.setState({ timeline: updateTimeline });
   }
 
+  togglePlayback = () => {
+    console.log('toggleplayback');
+    this.setState(prevState => {
+      const before = prevState.playing;
+      const after = !prevState.playing;
+      console.log('PLAYING: was', before, 'now', after);
+      return { ...prevState, playing: after, timer: null };
+    });
+  }
+
   render = () => (
       <div className="App">
+
         <header className="App-header">
           Timeline Demo
         </header>
+
+        <KeyHandler
+          keyEventName={KEYPRESS}
+          keyValue=" "
+          onKeyHandle={this.togglePlayback}
+        />
+
         <main>
           <Timeline 
             {...this.state.timeline} 
+            currentPosition={this.state.currentPosition}
             moveBlock={this.moveBlock} 
             moveTargetPosition={this.moveTargetPosition} 
           />
         </main>
+
       </div>
     );
   
