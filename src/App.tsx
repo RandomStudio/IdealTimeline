@@ -10,13 +10,13 @@ const dummy = {
       blocks: [
         {
           id: 0,
-          name: "Block One",
+          name: "One",
           start: 0,
           duration: 60
         },
         {
           id: 1,
-          name: "Block Two",
+          name: "Two",
           start: 70,
           duration: 30
         }
@@ -25,7 +25,14 @@ const dummy = {
     {
       id: 1,
       name: "layer2",
-      blocks: []
+      blocks: [
+        {
+          id: 0,
+          name: "Another",
+          start: 15,
+          duration: 30
+        }
+      ]
     } 
   ]
 } as ITimeline;
@@ -59,8 +66,15 @@ class App extends React.Component {
         : layer
       )
     }
-    // console.log('updated timeline:', updateTimeline);
     this.setState({ timeline: updateTimeline });
+  }
+
+  moveTargetPosition = (newPosition: number | null) => {
+    // console.log('moveTargetPosition', newPosition);
+    this.setState({ timeline: {
+      ...this.state.timeline,
+      targetPosition: newPosition 
+    }});
   }
 
   render = () => (
@@ -69,7 +83,11 @@ class App extends React.Component {
           Timeline Demo
         </header>
         <main>
-          <Timeline {...this.state.timeline} moveBlock={this.moveBlock} />
+          <Timeline 
+            {...this.state.timeline} 
+            moveBlock={this.moveBlock} 
+            moveTargetPosition={this.moveTargetPosition} 
+          />
         </main>
       </div>
     );

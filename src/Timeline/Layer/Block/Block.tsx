@@ -13,7 +13,8 @@ export interface IBlockProps extends IBlock, IBlockFunctions {
 }
 
 export interface IBlockFunctions {
-    moveBlock: (layerId: number, blockId: number, newStart: number) => void
+    moveBlock: (layerId: number, blockId: number, newStart: number) => void,
+    moveTargetPosition: (newPosition: number | null) => void
 }
 
 const scale = 1;
@@ -25,35 +26,52 @@ const scale = 1;
 class Block extends React.Component<IBlockProps> {
 
   state = {
-    mouseRelativeLeft: this.props.start
+    layerLeft: null,
+    drag: {
+      targetX: 0,
+      mouseRelativeLeft: 0,
+    }
   }
 
-  handleDrag = (event: React.DragEvent<HTMLElement>) => {
-    console.log(event);
-    // console.log(event.clientX, event.screenX, event.pageX);
+  handleDrag = (event: React.DragEvent) => {
     const target = event.target as HTMLElement;
-      if (target.parentElement !== null) {
+    if (target.parentElement !== null) {
+
+      if (this.state.drag) {
+        const layerLeft = this.state.layerLeft || target.parentElement.offsetLeft ;
         const mouseX = event.clientX;
-        const layerLeft = target.parentElement.offsetLeft;
-        const blockLeftAbsolute = target.offsetLeft + layerLeft;
-        const blockShift = this.state.mouseRelativeLeft;
-        const x = mouseX - layerLeft - blockShift;
-        // console.log(mouseX, blockStart, blockShift);
-        // console.log('from', this.state.blockLeft, 'relative:', blockShift);
-        // console.log(pointerInBlock);
-        this.props.moveBlock(this.props.layerId, this.props.id, x);
+        const blockShift = this.state.drag.mouseRelativeLeft;
+        if (blockShift && mouseX > 0) {
+          const targetX = mouseX - layerLeft - blockShift;
+          this.setState({ drag: { ...this.state.drag, targetX }});
+          this.props.moveTargetPosition(targetX + layerLeft);
+        }
       }
+
+
+    }
+  }
+
+  handleDragEnd = (event: React.DragEvent) => {
+    console.log(event);
+    const target = event.target as HTMLElement;
+      if (target.parentElement !== null && this.state.drag) {
+        this.props.moveBlock(this.props.layerId, this.props.id, this.state.drag.targetX);
+      }
+      this.props.moveTargetPosition(null);
   }
 
   handleDragStart = (event: React.DragEvent) => {
     const target = event.target as HTMLElement;
     if (target.parentElement) {
       const layerLeft = target.parentElement.offsetLeft;
+      if (this.state.layerLeft === null) {
+        this.setState({ layerLeft });
+      }
       const blockLeftAbsolute = target.offsetLeft + layerLeft;
       const mouseX = event.clientX;
       const mouseRelativeLeft = mouseX - blockLeftAbsolute;
-      // console.log('start at', blockLeftAbsolute, 'with mouse offset', mouseRelativeLeft);
-      this.setState({ mouseRelativeLeft });
+      this.setState({ drag: { mouseRelativeLeft }});
     }
   }
 
@@ -67,7 +85,8 @@ class Block extends React.Component<IBlockProps> {
       <div 
         className="Block" 
         style={style} 
-        onDragEnd={(e) => { this.handleDrag(e) }} 
+        onDrag={(e) => { this.handleDrag(e) }}
+        onDragEnd={(e) => { this.handleDragEnd(e) }} 
         onDragStart={(e)=> { this.handleDragStart(e) }}
         draggable={true}
       >

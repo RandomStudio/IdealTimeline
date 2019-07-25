@@ -17,7 +17,13 @@ const Layer: React.FC<ILayerProps> = (props) => {
         {props.id}: {props.name}
       </div>
       <div className="layer-content">
-        {props.blocks.map(block => <Block {...block} layerId={props.id} key={block.id} moveBlock={props.moveBlock} />)}      
+        {props.blocks.map(block => <Block 
+          {...block} 
+          layerId={props.id} 
+          key={block.id} 
+          moveBlock={props.moveBlock} 
+          moveTargetPosition={props.moveTargetPosition}
+        />)}      
       </div>
     </div>
   );
