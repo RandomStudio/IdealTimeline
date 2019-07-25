@@ -68,9 +68,9 @@ class App extends React.Component<any, IAppState> {
     // console.log('now', now, 'delta', delta);
     if (delta > 1000/60) {
       lastTime = now;
-      // console.log('tick');
+      // console.log('tick', delta);
       if (this.state.playing) {
-        this.setState({ currentPosition: this.state.currentPosition + delta/60 });
+        this.setState({ currentPosition: this.state.currentPosition + delta });
       }
     }
   }
@@ -133,8 +133,8 @@ class App extends React.Component<any, IAppState> {
           onKeyHandle={this.togglePlayback}
         />
         <KeyHandler
-          keyEventName={KEYPRESS}
-          keyValue="h"
+          keyEventName={'keydown'}
+          code="Home"
           onKeyHandle={() => { this.setPlayhead(0)}}
         />
 

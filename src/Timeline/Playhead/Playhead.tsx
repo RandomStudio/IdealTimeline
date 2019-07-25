@@ -11,15 +11,15 @@ export interface IPlayheadProps {
   type: PlayheadType
 }
 
-const scale = 1;
+const scale = 10;
 const start = 128;
 
 const Playhead: React.FC<IPlayheadProps> = (props) => {
 
   const style = {
     left: props.type === PlayheadType.Current 
-      ? props.position + start 
-      : props.position * scale,
+      ? props.position / scale + start 
+      : props.position / scale,
     backgroundColor: props.type === PlayheadType.Current ? 'green' : 'grey'
   }
   return (
