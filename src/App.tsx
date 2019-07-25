@@ -34,7 +34,8 @@ const dummy = {
         }
       ]
     } 
-  ]
+  ],
+  currentPosition: 0
 } as ITimeline;
 
 

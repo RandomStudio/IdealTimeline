@@ -53,7 +53,6 @@ class Block extends React.Component<IBlockProps> {
   }
 
   handleDragEnd = (event: React.DragEvent) => {
-    console.log(event);
     const target = event.target as HTMLElement;
       if (target.parentElement !== null && this.state.drag) {
         this.props.moveBlock(this.props.layerId, this.props.id, this.state.drag.targetX);

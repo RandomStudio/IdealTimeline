@@ -6,6 +6,7 @@ import Playhead, { PlayheadType } from './Playhead/Playhead';
 
 export interface ITimeline {
   layers: ILayer[],
+  currentPosition: number,
   targetPosition: number | null
 }
 
@@ -20,6 +21,8 @@ const Timeline: React.FC<ITimelineProps> = (props) => {
                 {JSON.stringify(props)}
             </code>
         </div>
+
+        <Playhead position={props.currentPosition} type={PlayheadType.Current} />
 
         {typeof props.targetPosition === 'number' &&
           <Playhead position={props.targetPosition} type={PlayheadType.Target} />
