@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+import Timeline from './Timeline/Timeline';
 
 const App: React.FC = () => {
   return (
@@ -8,7 +9,7 @@ const App: React.FC = () => {
         Timeline Demo
       </header>
       <main>
-        Timeline goes here
+        <Timeline />
       </main>
     </div>
   );
