@@ -71,10 +71,8 @@ class App extends React.Component {
 
   moveTargetPosition = (newPosition: number | null) => {
     // console.log('moveTargetPosition', newPosition);
-    this.setState({ timeline: {
-      ...this.state.timeline,
-      targetPosition: newPosition 
-    }});
+    const updateTimeline =  { ...this.state.timeline, targetPosition: newPosition };
+    this.setState({ timeline: updateTimeline });
   }
 
   render = () => (

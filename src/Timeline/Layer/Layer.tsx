@@ -20,7 +20,7 @@ const Layer: React.FC<ILayerProps> = (props) => {
         {props.blocks.map(block => <Block 
           {...block} 
           layerId={props.id} 
-          key={block.id} 
+          key={`${props.id}-${block.id}`} 
           moveBlock={props.moveBlock} 
           moveTargetPosition={props.moveTargetPosition}
         />)}      

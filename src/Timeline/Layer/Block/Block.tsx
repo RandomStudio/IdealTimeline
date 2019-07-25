@@ -57,8 +57,10 @@ class Block extends React.Component<IBlockProps> {
     const target = event.target as HTMLElement;
       if (target.parentElement !== null && this.state.drag) {
         this.props.moveBlock(this.props.layerId, this.props.id, this.state.drag.targetX);
+        setTimeout(() => { 
+          this.props.moveTargetPosition(null);
+        }, 1000);
       }
-      this.props.moveTargetPosition(null);
   }
 
   handleDragStart = (event: React.DragEvent) => {
