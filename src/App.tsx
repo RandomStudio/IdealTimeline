@@ -1,6 +1,16 @@
 import React from 'react';
 import './App.css';
 import Timeline from './Timeline/Timeline';
+import { LayerProps } from './Timeline/Layer/Layer';
+
+const dummy = {
+  layers: [
+      {
+          id: 0,
+          name: "layer1"
+      } as LayerProps
+  ] as [LayerProps]
+}
 
 const App: React.FC = () => {
   return (
@@ -9,7 +19,7 @@ const App: React.FC = () => {
         Timeline Demo
       </header>
       <main>
-        <Timeline />
+        <Timeline timeline={dummy} />
       </main>
     </div>
   );

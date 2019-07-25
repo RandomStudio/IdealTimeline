@@ -1,13 +1,14 @@
 import React from 'react';
 
-interface LayerProps {
+export interface LayerProps {
+    id: number,
     name: string;
-  }
+}
 
 const Layer: React.FC<LayerProps> = (props) => {
   return (
     <div className="Layer">
-        {props.name}
+        {props.id}: {props.name}
     </div>
   );
 }
