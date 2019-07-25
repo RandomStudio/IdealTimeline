@@ -2,7 +2,7 @@ import React from 'react';
 import './Timeline.scss';
 import Layer, { ILayer } from './Layer/Layer';
 import { IBlockFunctions } from './Layer/Block/Block';
-import Playhead from './Playhead/Playhead';
+import Playhead, { PlayheadType } from './Playhead/Playhead';
 
 export interface ITimeline {
   layers: ILayer[],
@@ -22,7 +22,7 @@ const Timeline: React.FC<ITimelineProps> = (props) => {
         </div>
 
         {typeof props.targetPosition === 'number' &&
-          <Playhead position={props.targetPosition} />
+          <Playhead position={props.targetPosition} type={PlayheadType.Target} />
         }
 
         <div className="layers">
