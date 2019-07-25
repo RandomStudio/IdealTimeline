@@ -29,7 +29,7 @@ Some aspects of what we need are found in the above examples, but ideally we nee
 - [ ] Blocks should be resizable
 - [ ] Blocks should be able to insert (shift later blocks)
 - [ ] Timeline should be zoomable
-- [ ] Timeline should be playable, i.e. a playhead starts moving
+- [x] Timeline should be playable, i.e. a playhead starts moving
 - [ ] Timelines should be nestable
 
 
