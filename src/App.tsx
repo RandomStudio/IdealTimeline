@@ -1,16 +1,17 @@
 import React from 'react';
 import './App.css';
-import Timeline from './Timeline/Timeline';
+import Timeline, { TimelineProps } from './Timeline/Timeline';
 import { LayerProps } from './Timeline/Layer/Layer';
 
 const dummy = {
   layers: [
       {
           id: 0,
-          name: "layer1"
-      } as LayerProps
-  ] as [LayerProps]
-}
+          name: "layer1",
+          blocks: []
+      } 
+  ]
+} as TimelineProps;
 
 const App: React.FC = () => {
   return (
@@ -19,7 +20,7 @@ const App: React.FC = () => {
         Timeline Demo
       </header>
       <main>
-        <Timeline timeline={dummy} />
+        <Timeline {...dummy} />
       </main>
     </div>
   );

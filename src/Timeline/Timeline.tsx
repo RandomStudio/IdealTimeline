@@ -1,19 +1,17 @@
 import React from 'react';
 import Layer, { LayerProps } from './Layer/Layer';
 
-interface TimelineProps {
-    timeline: {
-      layers: [ LayerProps ]
-    }
+export interface TimelineProps {
+  layers: [ LayerProps ]
 }
 
 const Timeline: React.FC<TimelineProps> = (props) => {
-  const layers = props.timeline.layers;
+  const layers = props.layers;
   return (
     <div className="Timeline">
         <div className="debug">
             <code>
-                {JSON.stringify(props.timeline)}
+                {JSON.stringify(props)}
             </code>
         </div>
 

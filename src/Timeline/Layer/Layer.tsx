@@ -1,8 +1,10 @@
 import React from 'react';
+import { BlockProps } from './Block/Block';
 
 export interface LayerProps {
     id: number,
     name: string;
+    blocks: [ BlockProps? ] 
 }
 
 const Layer: React.FC<LayerProps> = (props) => {
