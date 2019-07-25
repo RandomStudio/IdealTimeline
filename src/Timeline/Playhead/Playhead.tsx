@@ -11,7 +11,7 @@ export interface IPlayheadProps {
   type: PlayheadType
 }
 
-const scale = 10;
+const scale = 1;
 const start = 128;
 
 const Playhead: React.FC<IPlayheadProps> = (props) => {

@@ -17,7 +17,7 @@ export interface IBlockFunctions {
     moveTargetPosition: (newPosition: number | null) => void
 }
 
-const scale = 10;
+const scale = 1;
 
 
 
