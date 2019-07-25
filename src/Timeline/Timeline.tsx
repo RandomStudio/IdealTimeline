@@ -4,7 +4,7 @@ import Layer from './Layer/Layer';
 const Timeline: React.FC = () => {
   return (
     <div className="Timeline">
-        <Layer />
+        <Layer name="layer1" />
     </div>
   );
 }

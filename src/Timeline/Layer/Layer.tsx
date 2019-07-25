@@ -1,9 +1,13 @@
 import React from 'react';
 
-const Layer: React.FC = (props) => {
+interface LayerProps {
+    name: string;
+  }
+
+const Layer: React.FC<LayerProps> = (props) => {
   return (
     <div className="Layer">
-        Test
+        {props.name}
     </div>
   );
 }
