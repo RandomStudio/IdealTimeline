@@ -2,7 +2,7 @@
 
 ## Motivation
 
-Timelines are prominent in D3, but also in other familiar tools such as After Effects, editing software and of course Flash. 
+Timelines are prominent in experience "design" applications such as [D3 Designer](https://www.disguise.one/en/products/designer/), but also in other familiar tools such as After Effects, editing software and of course Flash. In audio work they are common too, especially in [DAWs](https://en.wikipedia.org/wiki/Digital_audio_workstation).
 
 “mrdoob” of ThreeJS fame has even built a timeline editor in JS (https://github.com/mrdoob/frame.js/) that uses ThreeJS and can even do VR sequences, e.g. https://within-unlimited.github.io/under-neon-lights/ (“Under Neon Lights” music video for St Vincent)
 
@@ -30,6 +30,8 @@ Some aspects of what we need are found in the above examples, but ideally we nee
 - [ ] Blocks should be able to insert (shift later blocks)
 - [ ] Timeline should be zoomable
 - [x] Timeline should be playable, i.e. a playhead starts moving
+- [ ] Timeline should update a POJO
+- [ ] Timeline should emit events over a standardised websocket protocol
 - [ ] Timelines should be nestable
 
 
