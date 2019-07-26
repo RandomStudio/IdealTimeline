@@ -8,7 +8,7 @@ Timelines are prominent in experience "design" applications such as [D3 Designer
 
 ![neon lights](docs/images/neon-lights.png)
 
-Other examples exist but tend to lean much more strongly on the “layers with keyframing” model (à la After Effects) than than the “clips on layers” functionality, e.g. https://github.com/mojs/mojs-timeline-editor (tied to mojs framework)...
+Other examples exist but tend to lean much more strongly on the “layers with keyframing” model (à la After Effects) than than the “clips on layers” functionality (see video editors such as Premiere Pro). For example, here is https://github.com/mojs/mojs-timeline-editor (tied to mojs framework)...
 
 ![mojs timline](docs/images/timeline-editor.png)
 
