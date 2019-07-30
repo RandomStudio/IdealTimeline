@@ -62,7 +62,7 @@ class App extends React.Component<any, IAppState> {
       lastTime = now;
       // console.log('tick', delta);
       if (this.state.playing) {
-        this.setState({ currentPosition: this.state.currentPosition + delta});
+        this.setState({ currentPosition: Math.fround(this.state.currentPosition + delta)});
       }
     }
   }
@@ -115,7 +115,7 @@ class App extends React.Component<any, IAppState> {
   }
 
   moveTargetPosition = (newPosition: number | null) => {
-    console.log('moveTargetPosition', newPosition);
+    // console.log('moveTargetPosition', newPosition);
     const updateTimeline =  { ...this.state.timeline, targetPosition: newPosition };
     this.setState({ timeline: updateTimeline });
   }
@@ -160,6 +160,7 @@ class App extends React.Component<any, IAppState> {
             moveBlock={this.moveBlock}
             moveTargetPosition={this.moveTargetPosition}
             trimBlock={this.trimBlock}
+            setPlayhead={this.setPlayhead}
           />
         </main>
 
