@@ -4,6 +4,7 @@ import { Stage, Layer} from 'react-konva';
 import './Timeline.scss';
 import Track, { ITrack } from './Track/Track';
 import Playhead, { PlayheadType } from './Playhead/Playhead';
+import { IBlockFunctions } from './Track/Block/Block';
 
 
 export interface ITimeline {
@@ -12,7 +13,7 @@ export interface ITimeline {
   targetPosition: number | null
 }
 
-interface ITimelineProps extends ITimeline {}
+interface ITimelineProps extends ITimeline, IBlockFunctions {};
 
 const Timeline: React.FC<ITimelineProps> = (props) => {
   const tracks = props.tracks;
@@ -23,6 +24,7 @@ const Timeline: React.FC<ITimelineProps> = (props) => {
           {tracks.map(track => <Track 
             {...track} 
             key={track.id} 
+            moveBlock={props.moveBlock}
             /> 
           )}
         </Layer>
@@ -30,20 +32,5 @@ const Timeline: React.FC<ITimelineProps> = (props) => {
     </div>
   );
 }
-
-
-{/* <div className="debug">
-<code>
-    {JSON.stringify(props)}
-</code>
-</div>
-
-<Playhead position={props.currentPosition} type={PlayheadType.Current} />
-
-{typeof props.targetPosition === 'number' &&
-<Playhead position={props.targetPosition} type={PlayheadType.Target} />
-}
- */}
-
 
 export default Timeline;

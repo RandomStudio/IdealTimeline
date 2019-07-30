@@ -4,6 +4,7 @@ import Timeline, { ITimeline } from './Timeline/Timeline';
 //@ts-ignore
 import KeyHandler, { KEYPRESS } from 'react-key-handler';
 
+
 const dummy = {
   tracks: [
     {
@@ -19,8 +20,8 @@ const dummy = {
         {
           id: 1,
           name: "Two",
-          start: 70,
-          duration: 30
+          start: 60,
+          duration: 120
         }
       ]
     }    
@@ -68,7 +69,7 @@ class App extends React.Component<any, IAppState> {
   }
 
   moveBlock = (trackId: number, blockId: number, newStart: number) => {
-    // console.log(`moveBlock ${layerId}/${blockId} to x: ${newStart}`);
+    console.log(`moveBlock ${trackId}/${blockId} to x: ${newStart}`);
     const updateTimeline = {
       ...this.state.timeline,
       tracks: this.state.timeline.tracks.map(track => track.id === trackId
@@ -130,6 +131,7 @@ class App extends React.Component<any, IAppState> {
           <Timeline 
             {...this.state.timeline} 
             currentPosition={this.state.currentPosition}
+            moveBlock={this.moveBlock}
           />
         </main>
 

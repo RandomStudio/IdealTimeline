@@ -1,6 +1,6 @@
 import React from 'react';
 import './Track.scss';
-import Block, { IBlock } from './Block/Block';
+import Block, { IBlock, IBlockFunctions } from './Block/Block';
 
 import { Group } from 'react-konva';
 
@@ -10,7 +10,7 @@ export interface ITrack {
     blocks: IBlock[]
 }
 
-export interface ITrackProps extends ITrack {}
+export interface ITrackProps extends ITrack, IBlockFunctions {}
 
 const Track: React.FC<ITrackProps> = (props) => {
   return (
@@ -18,9 +18,12 @@ const Track: React.FC<ITrackProps> = (props) => {
       {props.blocks.map(block => 
         <Block 
           id={block.id}
+          layerId={props.id}
           name={block.name}
           start={block.start}
           duration={block.duration}
+          height={64}
+          moveBlock={props.moveBlock}
         />
       )}
     </Group>
