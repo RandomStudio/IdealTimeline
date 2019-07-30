@@ -91,7 +91,11 @@ class Block extends React.Component<IBlockProps> {
         onDragStart={(e)=> { this.handleDragStart(e) }}
         draggable={true}
       >
+        <div className="label">
           {this.props.name}
+        </div>
+        <div className="edge start" />
+        <div className="edge end" />
       </div>
     );
   }

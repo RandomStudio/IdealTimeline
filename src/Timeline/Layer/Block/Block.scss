@@ -4,4 +4,26 @@
   height: 100%;
   overflow: hidden;
   white-space: nowrap;
+  cursor: grab;
+
+  .label {
+    position: absolute;
+  }
+
+  .edge {
+    width: 8px;
+    height: 100%;
+    position: absolute;
+    cursor: ew-resize;
+    background-color: black;
+    opacity: 0.25;
+
+    &.start {
+      left: 0;
+    }
+
+    &.end {
+      right: 0;    
+    }
+  }
 }
