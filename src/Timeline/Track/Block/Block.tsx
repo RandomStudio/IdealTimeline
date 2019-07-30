@@ -1,7 +1,8 @@
 import React from 'react';
 import { 
   Rect,
-  Group
+  Group,
+  Text
 } from 'react-konva';
 import { Vector2d } from 'konva/types/types';
 import { KonvaEventObject } from 'konva/types/Node';
@@ -17,6 +18,7 @@ export interface IBlock {
 
 export interface IBlockFunctions {
   moveBlock: (trackId: number, blockId: number, newStart: number) => void,
+  moveTargetPosition: (newPosition: number | null) => void,
   trimBlock: (trackId: number, blockId: number, startDelta: number, durationDelta: number) => void
 }
 
@@ -50,7 +52,11 @@ class Block extends React.Component<IBlockProps> {
       <Group
         draggable={true}
         dragBoundFunc={this.constrainDrag}
-        onDragEnd={(e: KonvaEventObject<DragEvent>) => { this.props.moveBlock(this.props.layerId, this.props.id, e.currentTarget.attrs.x) }}
+        onDragMove={(e: KonvaEventObject<DragEvent>) => { this.props.moveTargetPosition(e.currentTarget.attrs.x) }}
+        onDragEnd={(e: KonvaEventObject<DragEvent>) => { 
+          this.props.moveBlock(this.props.layerId, this.props.id, e.currentTarget.attrs.x);
+          this.props.moveTargetPosition(null);
+        }}
         x={x}
         >
         <Rect 
@@ -59,6 +65,10 @@ class Block extends React.Component<IBlockProps> {
           width={width}
           height={this.props.height}
           fill={"black"}
+        />
+        <Text
+          text={this.props.name}
+          fill={"white"}
         />
         <Rect
           key="trim-right"

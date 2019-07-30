@@ -14,7 +14,7 @@ export interface ITimeline {
   targetPosition: number | null
 }
 
-interface ITimelineProps extends ITimeline, IBlockFunctions {};
+interface ITimelineProps extends ITimeline, IBlockFunctions {}  
 
 const Timeline: React.FC<ITimelineProps> = (props) => {
   const tracks = props.tracks;
@@ -26,12 +26,18 @@ const Timeline: React.FC<ITimelineProps> = (props) => {
           key={track.id} 
           moveBlock={props.moveBlock}
           trimBlock={props.trimBlock}
+          moveTargetPosition={props.moveTargetPosition}
           /> 
         )}
       </Layer>
       <Layer>
-        <Playhead type={PlayheadType.Current} position={props.currentPosition} height={64} />
+        <Playhead type={PlayheadType.Current} position={props.currentPosition} height={128} />
       </Layer>
+      {props.targetPosition !== null &&
+        <Layer>
+          <Playhead type={PlayheadType.Target} position={props.targetPosition} height={128} />
+        </Layer>
+      }
     </Stage>
   );
 }

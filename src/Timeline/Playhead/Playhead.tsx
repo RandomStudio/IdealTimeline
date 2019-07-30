@@ -30,7 +30,7 @@ const Playhead: React.FC<IPlayheadProps> = (props) => {
       y={0}
       width={6}
       height={props.height}
-      fill={"blue"}
+      fill={props.type === PlayheadType.Current ? "blue": "gray"}
       opacity={0.6}
     />
   )

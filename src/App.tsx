@@ -90,7 +90,7 @@ class App extends React.Component<any, IAppState> {
   }
 
   trimBlock = (trackId: number, blockId: number, startDelta: number, durationDelta: number) => {
-    console.log(`trimBlock ${trackId}/${blockId}: startDelta: ${startDelta}, durationDelta: ${durationDelta}`);
+    // console.log(`trimBlock ${trackId}/${blockId}: startDelta: ${startDelta}, durationDelta: ${durationDelta}`);
     const updateTimeline = {
       ...this.state.timeline,
       tracks: this.state.timeline.tracks.map(track => track.id === trackId
@@ -112,6 +112,7 @@ class App extends React.Component<any, IAppState> {
   }
 
   moveTargetPosition = (newPosition: number | null) => {
+    console.log('moveTargetPosition', newPosition);
     const updateTimeline =  { ...this.state.timeline, targetPosition: newPosition };
     this.setState({ timeline: updateTimeline });
   }
@@ -154,6 +155,7 @@ class App extends React.Component<any, IAppState> {
             {...this.state.timeline} 
             currentPosition={this.state.currentPosition}
             moveBlock={this.moveBlock}
+            moveTargetPosition={this.moveTargetPosition}
             trimBlock={this.trimBlock}
           />
         </main>
