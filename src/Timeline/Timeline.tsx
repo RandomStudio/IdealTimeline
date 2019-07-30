@@ -31,7 +31,7 @@ const Timeline: React.FC<ITimelineProps> = (props) => {
         )}
       </Layer>
       <Layer>
-        <Playhead type={PlayheadType.Current} position={props.currentPosition} height={128} />
+        <Playhead type={PlayheadType.Current} position={props.currentPosition / 1000 * 60} height={128} />
       </Layer>
       {props.targetPosition !== null &&
         <Layer>

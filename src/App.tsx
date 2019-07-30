@@ -59,7 +59,7 @@ class App extends React.Component<any, IAppState> {
       lastTime = now;
       // console.log('tick', delta);
       if (this.state.playing) {
-        this.setState({ currentPosition: this.state.currentPosition + delta/60 });
+        this.setState({ currentPosition: this.state.currentPosition + delta});
       }
     }
   }
