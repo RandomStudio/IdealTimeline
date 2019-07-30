@@ -23,6 +23,20 @@ Some aspects of what we need are found in the above examples, but ideally we nee
 * "Block" or clip type editing (multiple per layer) **AND** keyframe editors (the blocks should move their associated keyframes with them)
 * Nested timelines
 
+## Tech
+Currently using:
+* react
+* [react-konva](https://github.com/konvajs/react-konva) (and therefore [konva](https://konvajs.org/) itself): for declarative-style 2D canvas drawing
+
+## Design
+
+Hierarchy of elements:
+* Timeline
+    * Track
+       * Block
+           * Keyframes
+
+
 ## Features Roadmap
 - [x] Layers provide concurrent blocks to be arranged
 - [x] Blocks should be movable (update start position)
