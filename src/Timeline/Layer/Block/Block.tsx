@@ -18,15 +18,18 @@ export interface IBlockFunctions {
 }
 
 const scale = 1;
+const LAYER_LEFT = 128;
 
-
-
+enum trimMode {
+  left = 'left',
+  right = 'right'
+}
 
 
 class Block extends React.Component<IBlockProps> {
 
   state = {
-    layerLeft: null,
+    trim: null,
     drag: {
       targetX: 0,
       mouseRelativeLeft: 0,
@@ -38,7 +41,7 @@ class Block extends React.Component<IBlockProps> {
     if (target.parentElement !== null) {
 
       if (this.state.drag) {
-        const layerLeft = this.state.layerLeft || target.parentElement.offsetLeft ;
+        const layerLeft = LAYER_LEFT;
         const mouseX = event.clientX;
         const blockShift = this.state.drag.mouseRelativeLeft;
         if (blockShift && mouseX > 0) {
@@ -64,15 +67,29 @@ class Block extends React.Component<IBlockProps> {
 
   handleDragStart = (event: React.DragEvent) => {
     const target = event.target as HTMLElement;
+    console.log(target.parentElement);
     if (target.parentElement) {
-      const layerLeft = target.parentElement.offsetLeft;
-      if (this.state.layerLeft === null) {
-        this.setState({ layerLeft });
-      }
-      const blockLeftAbsolute = target.offsetLeft + layerLeft;
+      const layerLeft = LAYER_LEFT;
+      const blockLeftAbsolute = target.parentElement.offsetLeft + layerLeft;
       const mouseX = event.clientX;
       const mouseRelativeLeft = mouseX - blockLeftAbsolute;
       this.setState({ drag: { mouseRelativeLeft }});
+    }
+  }
+
+  trimStart = () => {
+    console.log('trim start!')
+    this.setState({ trim: trimMode.left });
+  }
+
+  trimStop = () => {
+    console.log('trim stop!');
+    this.setState({ trim: null });
+  }
+
+  trimHandle = (event: any) => {
+    if (this.state.trim) {
+      console.log('trimming:', event);
     }
   }
 
@@ -86,16 +103,25 @@ class Block extends React.Component<IBlockProps> {
       <div 
         className="Block" 
         style={style} 
-        onDrag={(e) => { this.handleDrag(e) }}
-        onDragEnd={(e) => { this.handleDragEnd(e) }} 
-        onDragStart={(e)=> { this.handleDragStart(e) }}
-        draggable={true}
-      >
-        <div className="label">
-          {this.props.name}
+        >
+        <div className="middle"
+          onDrag={(e) => { this.handleDrag(e) }}
+          onDragEnd={(e) => { this.handleDragEnd(e) }} 
+          onDragStart={(e)=> { this.handleDragStart(e) }}
+          draggable={true}
+        >
+          <div className="label">
+            {this.props.name}
+          </div>
         </div>
-        <div className="edge start" />
-        <div className="edge end" />
+
+        <div 
+          className="edge left" 
+          onMouseDown={() => this.trimStart()} 
+          onMouseUp={() => this.trimStop()}
+          onMouseMove={this.trimHandle}
+        />
+        <div className="edge right" />
       </div>
     );
   }

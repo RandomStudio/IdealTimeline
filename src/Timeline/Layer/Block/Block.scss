@@ -1,29 +1,40 @@
+$block-width: 4px;
+
 .Block {
   position: absolute;
-  background-color: red;
+  background-color: black;
   height: 100%;
-  overflow: hidden;
-  white-space: nowrap;
-  cursor: grab;
-
-  .label {
+  overflow: visible;
+  
+  .middle {
+    overflow: hidden;
+    background-color:red;
+    width: 100%;
+    height: 100%;
     position: absolute;
+    cursor: grab;
+    .label {
+      white-space: nowrap;
+      position: absolute;
+    }
   }
 
+
   .edge {
-    width: 8px;
+    width: $block-width;
     height: 100%;
     position: absolute;
     cursor: ew-resize;
     background-color: black;
-    opacity: 0.25;
+    opacity: 0.85;
 
-    &.start {
-      left: 0;
+    &.left {
+      left: -$block-width;
+      background-color: green;
     }
 
-    &.end {
-      right: 0;    
+    &.right {
+      right: -$block-width;    
     }
   }
 }
