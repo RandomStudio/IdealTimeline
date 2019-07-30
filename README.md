@@ -28,6 +28,7 @@ Some aspects of what we need are found in the above examples, but ideally we nee
 - [x] Blocks should be movable (update start position)
 - [ ] Blocks should be resizable
 - [ ] Blocks should be able to insert (shift later blocks)
+- [ ] Blocks should be movable between layers
 - [ ] Timeline should be zoomable
 - [x] Timeline should be playable, i.e. a playhead starts moving
 - [ ] Timeline should update a POJO
