@@ -5,7 +5,7 @@ import Timeline, { ITimeline } from './Timeline/Timeline';
 import KeyHandler, { KEYPRESS } from 'react-key-handler';
 
 const dummy = {
-  layers: [
+  tracks: [
     {
       id: 0,
       name: "layer1",
@@ -23,19 +23,7 @@ const dummy = {
           duration: 30
         }
       ]
-    },
-    {
-      id: 1,
-      name: "layer2",
-      blocks: [
-        {
-          id: 0,
-          name: "Another",
-          start: 15,
-          duration: 30
-        }
-      ]
-    } 
+    }    
   ],
 } as ITimeline;
 
@@ -79,14 +67,14 @@ class App extends React.Component<any, IAppState> {
     requestAnimationFrame(this.tick);
   }
 
-  moveBlock = (layerId: number, blockId: number, newStart: number) => {
+  moveBlock = (trackId: number, blockId: number, newStart: number) => {
     // console.log(`moveBlock ${layerId}/${blockId} to x: ${newStart}`);
     const updateTimeline = {
       ...this.state.timeline,
-      layers: this.state.timeline.layers.map(layer => layer.id === layerId
+      tracks: this.state.timeline.tracks.map(track => track.id === trackId
         ? { 
-          ...layer, 
-          blocks: layer.blocks.map(block => block.id === blockId
+          ...track, 
+          blocks: track.blocks.map(block => block.id === blockId
             ? {
               ...block,
               start: newStart
@@ -94,7 +82,7 @@ class App extends React.Component<any, IAppState> {
             : block
           )
         }
-        : layer
+        : track
       )
     }
     this.setState({ timeline: updateTimeline });
@@ -142,8 +130,6 @@ class App extends React.Component<any, IAppState> {
           <Timeline 
             {...this.state.timeline} 
             currentPosition={this.state.currentPosition}
-            moveBlock={this.moveBlock} 
-            moveTargetPosition={this.moveTargetPosition} 
           />
         </main>
 
