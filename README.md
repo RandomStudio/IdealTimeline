@@ -26,7 +26,7 @@ Some aspects of what we need are found in the above examples, but ideally we nee
 ## Features Roadmap
 - [x] Layers provide concurrent blocks to be arranged
 - [x] Blocks should be movable (update start position)
-- [ ] Blocks should be resizable
+- [x] Blocks should be resizable
 - [ ] Blocks should be able to insert (shift later blocks)
 - [ ] Blocks should be movable between layers
 - [ ] Timeline should be zoomable
