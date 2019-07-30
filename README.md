@@ -31,7 +31,7 @@ Some aspects of what we need are found in the above examples, but ideally we nee
 - [ ] Blocks should be movable between layers
 - [ ] Timeline should be zoomable
 - [x] Timeline should be playable, i.e. a playhead starts moving
-- [ ] Timeline should be movable by mouse click
+- [x] Timeline should be movable by mouse click
 - [ ] Timeline should update a POJO
 - [ ] Timeline should emit events over a standardised websocket protocol
 - [ ] Timelines should be nestable
