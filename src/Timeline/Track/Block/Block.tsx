@@ -7,6 +7,7 @@ import {
 import { Vector2d } from 'konva/types/types';
 import { KonvaEventObject } from 'konva/types/Node';
 import { posix } from 'path';
+import Konva from 'konva';
 
 export interface IBlock {
   id: number,
@@ -16,10 +17,16 @@ export interface IBlock {
   height: number
 }
 
+export enum CursorType {
+  default = 'default',
+  move = 'move',
+}
+
 export interface IBlockFunctions {
   moveBlock: (trackId: number, blockId: number, newStart: number) => void,
   moveTargetPosition: (newPosition: number | null) => void,
-  trimBlock: (trackId: number, blockId: number, startDelta: number, durationDelta: number) => void
+  trimBlock: (trackId: number, blockId: number, startDelta: number, durationDelta: number) => void,
+  changeCursor: (style: CursorType) => void,
 }
 
 export interface IBlockProps extends IBlock, IBlockFunctions {
@@ -50,6 +57,7 @@ class Block extends React.Component<IBlockProps> {
     const width = this.props.duration * scale;
     return (
       <Group
+        x={x}
         draggable={true}
         dragBoundFunc={this.constrainDrag}
         onDragMove={(e: KonvaEventObject<DragEvent>) => { this.props.moveTargetPosition(e.currentTarget.attrs.x) }}
@@ -57,8 +65,9 @@ class Block extends React.Component<IBlockProps> {
           this.props.moveBlock(this.props.layerId, this.props.id, e.currentTarget.attrs.x);
           this.props.moveTargetPosition(null);
         }}
-        x={x}
-        >
+        onMouseEnter={() => this.props.changeCursor(CursorType.move)}
+        onMouseLeave={() => this.props.changeCursor(CursorType.default)}
+      >
         <Rect 
         x={0}
           y={0}
