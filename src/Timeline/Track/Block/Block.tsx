@@ -24,7 +24,7 @@ export interface IBlockProps extends IBlock, IBlockFunctions {
 }
 
 const scale = 1;
-const handleWidth = 6;
+const handleWidth = 10;
 
 
 class Block extends React.Component<IBlockProps> {
@@ -57,17 +57,31 @@ class Block extends React.Component<IBlockProps> {
           y={0}
           width={width}
           height={this.props.height}
-          fill={"#ff0000"}
+          fill={"black"}
         />
         <Rect
+          key="trim-right"
           x={width}
           y={0}
           width={handleWidth}
           height={this.props.height}
-          fill={"#333333"}
+          fill={"red"}
           draggable={true}
           dragBoundFunc={this.constrainDrag}
           onDragMove={(e: KonvaEventObject<DragEvent>) => { this.props.trimBlock(this.props.layerId, this.props.id, 0, e.currentTarget.attrs.x - width)}}
+          opacity={0.5}
+        />
+        <Rect
+          key="trim-left"
+          x={0}
+          y={0}
+          width={handleWidth}
+          height={this.props.height}
+          fill={"green"}
+          draggable={true}
+          dragBoundFunc={this.constrainDrag}
+          onDragMove={(e: KonvaEventObject<DragEvent>) => { this.props.trimBlock(this.props.layerId, this.props.id, e.currentTarget.attrs.x, -e.currentTarget.attrs.x)}}
+          opacity={0.5}
         />
       </Group>
     )
