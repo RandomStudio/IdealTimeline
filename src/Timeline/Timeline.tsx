@@ -25,6 +25,7 @@ const Timeline: React.FC<ITimelineProps> = (props) => {
             {...track} 
             key={track.id} 
             moveBlock={props.moveBlock}
+            trimBlock={props.trimBlock}
             /> 
           )}
         </Layer>

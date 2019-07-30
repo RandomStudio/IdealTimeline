@@ -24,6 +24,7 @@ const Track: React.FC<ITrackProps> = (props) => {
           duration={block.duration}
           height={64}
           moveBlock={props.moveBlock}
+          trimBlock={props.trimBlock}
         />
       )}
     </Group>

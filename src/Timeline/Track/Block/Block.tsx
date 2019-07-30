@@ -15,7 +15,8 @@ export interface IBlock {
 }
 
 export interface IBlockFunctions {
-  moveBlock: (trackId: number, blockId: number, newStart: number) => void
+  moveBlock: (trackId: number, blockId: number, newStart: number) => void,
+  trimBlock: (trackId: number, blockId: number, startDelta: number, durationDelta: number) => void
 }
 
 export interface IBlockProps extends IBlock, IBlockFunctions {
@@ -23,11 +24,7 @@ export interface IBlockProps extends IBlock, IBlockFunctions {
 }
 
 const scale = 1;
-
-enum trimMode {
-  left = 'left',
-  right = 'right'
-}
+const handleWidth = 6;
 
 
 class Block extends React.Component<IBlockProps> {
@@ -56,20 +53,21 @@ class Block extends React.Component<IBlockProps> {
         x={x}
         >
         <Rect 
-          x={0}
+        x={0}
           y={0}
           width={width}
           height={this.props.height}
           fill={"#ff0000"}
         />
         <Rect
-          x={0}
+          x={width}
           y={0}
-          width={4}
+          width={handleWidth}
           height={this.props.height}
           fill={"#333333"}
           draggable={true}
           dragBoundFunc={this.constrainDrag}
+          onDragMove={(e: KonvaEventObject<DragEvent>) => { this.props.trimBlock(this.props.layerId, this.props.id, 0, e.currentTarget.attrs.x - width)}}
         />
       </Group>
     )
