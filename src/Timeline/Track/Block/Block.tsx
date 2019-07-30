@@ -5,6 +5,7 @@ import {
 } from 'react-konva';
 import { Vector2d } from 'konva/types/types';
 import { KonvaEventObject } from 'konva/types/Node';
+import { posix } from 'path';
 
 export interface IBlock {
   id: number,
@@ -35,7 +36,7 @@ class Block extends React.Component<IBlockProps> {
 
   constrainDrag = (pos: Vector2d) => {
     return ({
-      x: pos.x,
+      x: pos.x >= 0 ? pos.x : 0,
       y: 0
     });
   }
