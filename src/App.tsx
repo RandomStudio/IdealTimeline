@@ -26,12 +26,14 @@ const dummy = {
       ]
     }    
   ],
+  targetPosition: null
 } as ITimeline;
 
 interface IAppState {
   timeline: ITimeline,
   playing: boolean,
   currentPosition: number,
+  targetPosition: number | null
 }
 
 let lastTime: number;
@@ -42,6 +44,7 @@ class App extends React.Component<any, IAppState> {
     timeline: dummy,
     playing: false,  
     currentPosition: 0, 
+    targetPosition: null
   } as IAppState
 
   // updateBlock = (layerId: number, blockId: number, updated: {}) => {
