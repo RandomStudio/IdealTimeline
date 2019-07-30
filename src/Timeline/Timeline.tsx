@@ -1,10 +1,11 @@
 import React from 'react';
-import { Stage, Layer} from 'react-konva';
+import { Stage, Layer, Rect} from 'react-konva';
 
 import './Timeline.scss';
 import Track, { ITrack } from './Track/Track';
 import Playhead, { PlayheadType } from './Playhead/Playhead';
 import { IBlockFunctions } from './Track/Block/Block';
+import { Vector2d } from 'konva/types/types';
 
 
 export interface ITimeline {
@@ -18,19 +19,20 @@ interface ITimelineProps extends ITimeline, IBlockFunctions {};
 const Timeline: React.FC<ITimelineProps> = (props) => {
   const tracks = props.tracks;
   return (
-    <div>
-      <Stage width={1000} height={1000}>
-        <Layer>
-          {tracks.map(track => <Track 
-            {...track} 
-            key={track.id} 
-            moveBlock={props.moveBlock}
-            trimBlock={props.trimBlock}
-            /> 
-          )}
-        </Layer>
-      </Stage>
-    </div>
+    <Stage width={1000} height={256}>
+      <Layer>
+        {tracks.map(track => <Track 
+          {...track} 
+          key={track.id} 
+          moveBlock={props.moveBlock}
+          trimBlock={props.trimBlock}
+          /> 
+        )}
+      </Layer>
+      <Layer>
+        <Playhead type={PlayheadType.Current} position={props.currentPosition} height={64} />
+      </Layer>
+    </Stage>
   );
 }
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Rect } from 'react-konva';
 import './Playhead.scss';
 
 export enum PlayheadType {
@@ -8,7 +9,8 @@ export enum PlayheadType {
 
 export interface IPlayheadProps {
   position: number,
-  type: PlayheadType
+  type: PlayheadType,
+  height: number
 }
 
 const scale = 1;
@@ -23,7 +25,14 @@ const Playhead: React.FC<IPlayheadProps> = (props) => {
     backgroundColor: props.type === PlayheadType.Current ? 'green' : 'grey'
   }
   return (
-    <div className="Playhead" style={style} />
+    <Rect
+      x={props.position}
+      y={0}
+      width={6}
+      height={props.height}
+      fill={"blue"}
+      opacity={0.6}
+    />
   )
 }
 
