@@ -9,6 +9,7 @@ import { KonvaEventObject } from 'konva/types/Node';
 //@ts-ignore
 import KeyHandler, { KEYPRESS } from 'react-key-handler';
 import { Vector2d } from 'konva/types/types';
+import UnitMarkers from './UnitMarkers/UnitMarkers';
 
 export interface ITimeline {
   tracks: ITrack[],
@@ -41,7 +42,7 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
     playing: false,
     lastTime: null,
     tracks: [],
-    scale: { x: 1.0, y: 1.0 },
+    scale: { x: 100.0, y: 1.0 },
     trackTitleWidth: 0
   } as ITimelineState;
 
@@ -95,8 +96,8 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
           blocks: track.blocks.map(block => block.id === blockId
             ? {
               ...block,
-              start: block.start + startDelta,
-              duration: block.duration + durationDelta
+              start: block.start + startDelta / this.state.scale.x,
+              duration: block.duration + durationDelta / this.state.scale.x
             }
             : block
           )
@@ -134,6 +135,13 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
     }
   }
 
+  handleZoom = (delta: Vector2d) => {
+    const { scale } = this.state;
+    scale.x = scale.x + delta.x;
+    scale.y = scale.y + delta.y;
+    this.setState({ scale });
+  }
+
   render = () => {
     const tracks = this.state.tracks;
     return (
@@ -161,7 +169,8 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
               <Track 
                 {...track} 
                 key={track.id} 
-                height={NORMAL_HEIGHT * this.state.scale.x}
+                height={NORMAL_HEIGHT * this.state.scale.y}
+                scaleX={this.state.scale.x}
                 moveBlock={this.moveBlock}
                 trimBlock={this.trimBlock}
                 moveTargetPosition={this.moveTargetPosition}
@@ -178,11 +187,23 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
               <Playhead type={PlayheadType.Target} position={this.state.targetPosition} height={256} />
             </Layer>
           }
-
-
+          <Layer>
+            <UnitMarkers
+              interval={1}
+              distance={this.state.scale.x}
+            />
+          </Layer>      
 
         </Stage>
-        
+
+        <div className="controls">
+          <button onClick={(e) => { this.handleZoom({ x: -2, y: 0 }) }}>
+            zoom -
+          </button>
+          <button onClick={(e) => { this.handleZoom({ x: 1, y: 0 }) }}>
+            zoom +
+          </button>
+        </div>
 
         <div className="debug">
           <code>

@@ -14,7 +14,6 @@ export interface IBlock {
   name: string,
   start: number,
   duration: number,
-  height: number 
 }
 
 export enum CursorType {
@@ -32,10 +31,11 @@ export interface IBlockFunctions {
 }
 
 export interface IBlockProps extends IBlock, IBlockFunctions {
-  layerId: number
+  layerId: number,
+  height: number,
+  scaleX: number
 }
 
-const scale = 1;
 const handleWidth = 10;
 
 
@@ -55,8 +55,8 @@ class Block extends React.Component<IBlockProps> {
   
 
   render = () => {
-    const x = this.props.start * scale;
-    const width = this.props.duration * scale;
+    const x = this.props.start * this.props.scaleX;
+    const width = this.props.duration * this.props.scaleX;
     return (
       <Group
         x={x}
@@ -68,7 +68,7 @@ class Block extends React.Component<IBlockProps> {
           this.props.moveTargetPosition(e.currentTarget.attrs.x);
         }}
         onDragEnd={(e: KonvaEventObject<DragEvent>) => { 
-          this.props.moveBlock(this.props.layerId, this.props.id, e.currentTarget.attrs.x);
+          this.props.moveBlock(this.props.layerId, this.props.id, e.currentTarget.attrs.x / this.props.scaleX);
           this.props.moveTargetPosition(null);
           this.props.changeCursor(CursorType.move);
         }}

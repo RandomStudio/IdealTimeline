@@ -13,13 +13,13 @@ const dummy = {
           id: 0,
           name: "One",
           start: 0,
-          duration: 60
+          duration: 1
         },
         {
           id: 1,
           name: "Two",
-          start: 60,
-          duration: 120
+          start: 2,
+          duration: 2
         }
       ]
     },
@@ -30,14 +30,14 @@ const dummy = {
         {
           id: 0,
           name: "Three",
-          start: 0,
-          duration: 60
+          start: 0.5,
+          duration: 3
         },
         {
           id: 1,
           name: "Four",
-          start: 60,
-          duration: 120
+          start: 3.5,
+          duration: 4
         }
       ]
     }    
