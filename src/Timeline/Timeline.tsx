@@ -8,6 +8,7 @@ import { CursorType } from './Track/Block/Block';
 import { KonvaEventObject } from 'konva/types/Node';
 //@ts-ignore
 import KeyHandler, { KEYPRESS } from 'react-key-handler';
+import Konva from 'konva';
 
 export interface ITimeline {
   tracks: ITrack[],
@@ -26,7 +27,7 @@ interface ITimelineProps extends ITimeline {
 
 class Timeline extends React.Component<ITimelineProps, ITimelineState> {
 
-  stageRef = null;
+  stageRef: React.Ref<Stage> = React.createRef();
 
   state = {
     currentPosition: 0,
@@ -74,11 +75,12 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
       }
       : track
     );
+    // console.log('updated tracks:', tracks);
     this.setState({ tracks });
   }
 
   trimBlock = (trackId: number, blockId: number, startDelta: number, durationDelta: number) => {
-    // console.log(`trimBlock ${trackId}/${blockId}: startDelta: ${startDelta}, durationDelta: ${durationDelta}`);
+    console.log(`trimBlock ${trackId}/${blockId}: startDelta: ${startDelta}, durationDelta: ${durationDelta}`);
     const tracks = this.state.tracks.map(track => track.id === trackId
         ? { 
           ...track, 
@@ -93,12 +95,11 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
         }
         : track
       )
+    // console.log('updated tracks:', tracks);
     this.setState({ tracks });
   }
 
-  moveTargetPosition = (newPosition: number | null) => {
-    // console.log('moveTargetPosition', newPosition);
-    // const updateTimeline =  { ...this.props, targetPosition: newPosition };
+  moveTargetPosition = (newPosition: number | null) => {   
     this.setState({ targetPosition: newPosition });
   }
 
@@ -119,10 +120,14 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
 
   changeCursor = (style: CursorType) => {
     console.log('changeCursor to:', style);
+    if (this.stageRef) {
+      //@ts-ignore -- because .current does not exist on type?!
+      this.stageRef.current.container().style.cursor = style;
+    }
   }
 
   render = () => {
-    const tracks = this.props.tracks;
+    const tracks = this.state.tracks;
     return (
       <div className="Timeline">
   

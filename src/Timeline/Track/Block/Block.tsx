@@ -19,7 +19,9 @@ export interface IBlock {
 
 export enum CursorType {
   default = 'default',
-  move = 'move',
+  move = 'grab',
+  moving = 'grabbing',
+  resize = 'ew-resize'
 }
 
 export interface IBlockFunctions {
@@ -60,10 +62,14 @@ class Block extends React.Component<IBlockProps> {
         x={x}
         draggable={true}
         dragBoundFunc={this.constrainDrag}
-        onDragMove={(e: KonvaEventObject<DragEvent>) => { this.props.moveTargetPosition(e.currentTarget.attrs.x) }}
+        onDragMove={(e: KonvaEventObject<DragEvent>) => { 
+          this.props.changeCursor(CursorType.moving);
+          this.props.moveTargetPosition(e.currentTarget.attrs.x);
+        }}
         onDragEnd={(e: KonvaEventObject<DragEvent>) => { 
           this.props.moveBlock(this.props.layerId, this.props.id, e.currentTarget.attrs.x);
           this.props.moveTargetPosition(null);
+          this.props.changeCursor(CursorType.move);
         }}
       >
         <Rect 
@@ -72,8 +78,8 @@ class Block extends React.Component<IBlockProps> {
           width={width}
           height={this.props.height}
           fill={"black"}
-        onMouseEnter={() => this.props.changeCursor(CursorType.move)}
-        onMouseLeave={() => this.props.changeCursor(CursorType.default)}
+          onMouseEnter={() => this.props.changeCursor(CursorType.move)}
+          onMouseLeave={() => this.props.changeCursor(CursorType.default)}
         />
         <Text
           text={this.props.name}
@@ -90,6 +96,8 @@ class Block extends React.Component<IBlockProps> {
           dragBoundFunc={this.constrainDrag}
           onDragMove={(e: KonvaEventObject<DragEvent>) => { this.props.trimBlock(this.props.layerId, this.props.id, 0, e.currentTarget.attrs.x - width)}}
           opacity={0.5}
+          onMouseEnter={() => this.props.changeCursor(CursorType.resize)}
+          onMouseLeave={() => this.props.changeCursor(CursorType.default)}
         />
         <Rect
           key="trim-left"
@@ -102,6 +110,8 @@ class Block extends React.Component<IBlockProps> {
           dragBoundFunc={this.constrainDrag}
           onDragMove={(e: KonvaEventObject<DragEvent>) => { this.props.trimBlock(this.props.layerId, this.props.id, e.currentTarget.attrs.x, -e.currentTarget.attrs.x)}}
           opacity={0.5}
+          onMouseEnter={() => this.props.changeCursor(CursorType.resize)}
+          onMouseLeave={() => this.props.changeCursor(CursorType.default)}
         />
       </Group>
     )

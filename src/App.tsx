@@ -3,9 +3,6 @@ import './App.css';
 import Timeline, { ITimeline } from './Timeline/Timeline';
 
 
-import { CursorType } from './Timeline/Track/Block/Block';
-
-
 const dummy = {
   tracks: [
     {
