@@ -131,12 +131,6 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
     return (
       <div className="Timeline">
   
-        <div className="debug">
-          <code>
-            {JSON.stringify(this.state)}
-          </code>
-        </div>
-
         <KeyHandler
           keyEventName={KEYPRESS}
           keyValue=" "
@@ -174,6 +168,15 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
             </Layer>
           }
         </Stage>
+
+        <div className="debug">
+          <code>
+            {JSON.stringify(this.state)}
+          </code>
+        </div>
+
+
+
       </div>
     );
   }
