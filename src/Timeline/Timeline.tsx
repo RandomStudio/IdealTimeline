@@ -8,7 +8,7 @@ import { CursorType } from './Track/Block/Block';
 import { KonvaEventObject } from 'konva/types/Node';
 //@ts-ignore
 import KeyHandler, { KEYPRESS } from 'react-key-handler';
-import Konva from 'konva';
+import { Vector2d } from 'konva/types/types';
 
 export interface ITimeline {
   tracks: ITrack[],
@@ -19,11 +19,14 @@ export interface ITimelineState {
   targetPosition: number | null,
   playing: boolean,
   lastTime: number | null,
-  tracks: ITrack[]
+  tracks: ITrack[],
+  scale: Vector2d
 }
 
 interface ITimelineProps extends ITimeline {
 }  
+
+const NORMAL_HEIGHT = 64;
 
 class Timeline extends React.Component<ITimelineProps, ITimelineState> {
 
@@ -34,7 +37,8 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
     targetPosition: null,
     playing: false,
     lastTime: null,
-    tracks: []
+    tracks: [],
+    scale: { x: 1.0, y: 1.0 }
   } as ITimelineState;
 
   componentDidMount = () => {
@@ -80,7 +84,7 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
   }
 
   trimBlock = (trackId: number, blockId: number, startDelta: number, durationDelta: number) => {
-    console.log(`trimBlock ${trackId}/${blockId}: startDelta: ${startDelta}, durationDelta: ${durationDelta}`);
+    // console.log(`trimBlock ${trackId}/${blockId}: startDelta: ${startDelta}, durationDelta: ${durationDelta}`);
     const tracks = this.state.tracks.map(track => track.id === trackId
         ? { 
           ...track, 
@@ -104,7 +108,7 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
   }
 
   togglePlayback = () => {
-    console.log('toggleplayback');
+    // console.log('toggleplayback');
     this.setState(prevState => {
       const before = prevState.playing;
       const after = !prevState.playing;
@@ -119,7 +123,7 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
   }
 
   changeCursor = (style: CursorType) => {
-    console.log('changeCursor to:', style);
+    // console.log('changeCursor to:', style);
     if (this.stageRef) {
       //@ts-ignore -- because .current does not exist on type?!
       this.stageRef.current.container().style.cursor = style;
@@ -149,9 +153,10 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
           onClick={(e: KonvaEventObject<MouseEvent>) => { this.setPlayhead(e.evt.layerX * 1000 / 60) }}
         >
           <Layer>
-            {tracks.map(track => <Track 
+            {tracks.map( (track) => <Track 
               {...track} 
               key={track.id} 
+              height={NORMAL_HEIGHT * this.state.scale.x}
               moveBlock={this.moveBlock}
               trimBlock={this.trimBlock}
               moveTargetPosition={this.moveTargetPosition}

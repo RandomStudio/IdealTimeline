@@ -14,7 +14,7 @@ export interface IBlock {
   name: string,
   start: number,
   duration: number,
-  height?: number 
+  height: number 
 }
 
 export enum CursorType {
@@ -48,7 +48,7 @@ class Block extends React.Component<IBlockProps> {
   constrainDrag = (pos: Vector2d) => {
     return ({
       x: pos.x >= 0 ? pos.x : 0,
-      y: 0
+      y: this.props.height * this.props.layerId
     });
   }
 
@@ -60,6 +60,7 @@ class Block extends React.Component<IBlockProps> {
     return (
       <Group
         x={x}
+        y={0}
         draggable={true}
         dragBoundFunc={this.constrainDrag}
         onDragMove={(e: KonvaEventObject<DragEvent>) => { 
@@ -73,7 +74,7 @@ class Block extends React.Component<IBlockProps> {
         }}
       >
         <Rect 
-        x={0}
+          x={0}
           y={0}
           width={width}
           height={this.props.height}

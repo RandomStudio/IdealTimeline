@@ -7,7 +7,7 @@ const dummy = {
   tracks: [
     {
       id: 0,
-      name: "layer1",
+      name: "T1",
       blocks: [
         {
           id: 0,
@@ -22,9 +22,26 @@ const dummy = {
           duration: 120
         }
       ]
+    },
+    {
+      id: 1,
+      name: "T2",
+      blocks: [
+        {
+          id: 0,
+          name: "Three",
+          start: 0,
+          duration: 60
+        },
+        {
+          id: 1,
+          name: "Four",
+          start: 60,
+          duration: 120
+        }
+      ]
     }    
-  ],
-  targetPosition: null
+  ]
 } as ITimeline;
 
 interface IAppState {

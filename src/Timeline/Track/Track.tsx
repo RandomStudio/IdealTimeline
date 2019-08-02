@@ -8,21 +8,26 @@ export interface ITrack {
     id: number,
     name: string;
     blocks: IBlock[]
-}
-
-export interface ITrackProps extends ITrack, IBlockFunctions {}
+  }
+  
+  export interface ITrackProps extends ITrack, IBlockFunctions {
+    height: number;
+  }
 
 const Track: React.FC<ITrackProps> = (props) => {
   return (
-    <Group>
+    <Group
+      y={props.height * props.id}
+    >
       {props.blocks.map(block => 
         <Block 
+          key={block.id}
           id={block.id}
           layerId={props.id}
           name={block.name}
           start={block.start}
           duration={block.duration}
-          height={64}
+          height={props.height}
           moveBlock={props.moveBlock}
           trimBlock={props.trimBlock}
           moveTargetPosition={props.moveTargetPosition}
