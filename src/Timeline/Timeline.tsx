@@ -20,10 +20,13 @@ export interface ITimelineState {
   playing: boolean,
   lastTime: number | null,
   tracks: ITrack[],
-  scale: Vector2d
+  scale: Vector2d,
+  trackTitleWidth: number
 }
 
 interface ITimelineProps extends ITimeline {
+  width: number,
+  height: number
 }  
 
 const NORMAL_HEIGHT = 64;
@@ -38,7 +41,8 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
     playing: false,
     lastTime: null,
     tracks: [],
-    scale: { x: 1.0, y: 1.0 }
+    scale: { x: 1.0, y: 1.0 },
+    trackTitleWidth: 0
   } as ITimelineState;
 
   componentDidMount = () => {
@@ -148,19 +152,21 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
   
         <Stage 
           ref={this.stageRef}
-          width={1000} 
-          height={256}
+          width={this.props.width}
+          height={this.props.height}
           onClick={(e: KonvaEventObject<MouseEvent>) => { this.setPlayhead(e.evt.layerX * 1000 / 60) }}
         >
           <Layer>
-            {tracks.map( (track) => <Track 
-              {...track} 
-              key={track.id} 
-              height={NORMAL_HEIGHT * this.state.scale.x}
-              moveBlock={this.moveBlock}
-              trimBlock={this.trimBlock}
-              moveTargetPosition={this.moveTargetPosition}
-              changeCursor={this.changeCursor}
+            {tracks.map( (track) => 
+              <Track 
+                {...track} 
+                key={track.id} 
+                height={NORMAL_HEIGHT * this.state.scale.x}
+                moveBlock={this.moveBlock}
+                trimBlock={this.trimBlock}
+                moveTargetPosition={this.moveTargetPosition}
+                changeCursor={this.changeCursor}
+                trackTitleWidth={this.state.trackTitleWidth}
               /> 
             )}
           </Layer>
@@ -172,7 +178,11 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
               <Playhead type={PlayheadType.Target} position={this.state.targetPosition} height={256} />
             </Layer>
           }
+
+
+
         </Stage>
+        
 
         <div className="debug">
           <code>

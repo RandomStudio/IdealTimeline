@@ -70,6 +70,8 @@ class App extends React.Component<any, IAppState> {
         <main>
           <Timeline 
             {...this.state.timeline} 
+            width={window.innerWidth}
+            height={window.innerHeight/2}
           />
         </main>
 
