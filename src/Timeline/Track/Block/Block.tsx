@@ -87,7 +87,7 @@ class Block extends React.Component<IBlockProps> {
         />
         <Rect
           key="trim-right"
-          x={width}
+          x={width-handleWidth}
           y={0}
           width={handleWidth}
           height={this.props.height}
@@ -95,7 +95,7 @@ class Block extends React.Component<IBlockProps> {
           draggable={true}
           dragBoundFunc={this.constrainDrag}
           onDragMove={(e: KonvaEventObject<DragEvent>) => { this.props.trimBlock(this.props.layerId, this.props.id, 0, e.currentTarget.attrs.x - width)}}
-          opacity={0.5}
+          opacity={0.2}
           onMouseEnter={() => this.props.changeCursor(CursorType.resize)}
           onMouseLeave={() => this.props.changeCursor(CursorType.default)}
         />
@@ -109,7 +109,7 @@ class Block extends React.Component<IBlockProps> {
           draggable={true}
           dragBoundFunc={this.constrainDrag}
           onDragMove={(e: KonvaEventObject<DragEvent>) => { this.props.trimBlock(this.props.layerId, this.props.id, e.currentTarget.attrs.x, -e.currentTarget.attrs.x)}}
-          opacity={0.5}
+          opacity={0.2}
           onMouseEnter={() => this.props.changeCursor(CursorType.resize)}
           onMouseLeave={() => this.props.changeCursor(CursorType.default)}
         />
