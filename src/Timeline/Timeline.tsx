@@ -133,7 +133,7 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
   
         <div className="debug">
           <code>
-            {JSON.stringify(this.props)}
+            {JSON.stringify(this.state)}
           </code>
         </div>
 
