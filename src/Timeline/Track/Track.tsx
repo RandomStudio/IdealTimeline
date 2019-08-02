@@ -26,6 +26,7 @@ const Track: React.FC<ITrackProps> = (props) => {
           moveBlock={props.moveBlock}
           trimBlock={props.trimBlock}
           moveTargetPosition={props.moveTargetPosition}
+          changeCursor={props.changeCursor}
         />
       )}
     </Group>

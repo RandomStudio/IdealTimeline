@@ -14,7 +14,7 @@ export interface IBlock {
   name: string,
   start: number,
   duration: number,
-  height: number
+  height?: number 
 }
 
 export enum CursorType {
@@ -65,8 +65,6 @@ class Block extends React.Component<IBlockProps> {
           this.props.moveBlock(this.props.layerId, this.props.id, e.currentTarget.attrs.x);
           this.props.moveTargetPosition(null);
         }}
-        onMouseEnter={() => this.props.changeCursor(CursorType.move)}
-        onMouseLeave={() => this.props.changeCursor(CursorType.default)}
       >
         <Rect 
         x={0}
@@ -74,6 +72,8 @@ class Block extends React.Component<IBlockProps> {
           width={width}
           height={this.props.height}
           fill={"black"}
+        onMouseEnter={() => this.props.changeCursor(CursorType.move)}
+        onMouseLeave={() => this.props.changeCursor(CursorType.default)}
         />
         <Text
           text={this.props.name}
