@@ -165,6 +165,14 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
           onClick={(e: KonvaEventObject<MouseEvent>) => { this.setPlayhead(e.evt.layerX * 1000 / 60) }}
         >
           <Layer>
+            <UnitMarkers
+              distance={this.state.scale.x}
+              parentWidth={this.props.width}
+              parentHeight={this.props.height}
+            />
+          </Layer>      
+
+          <Layer>
             {tracks.map( (track) => 
               <Track 
                 {...track} 
@@ -180,27 +188,21 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
             )}
           </Layer>
           <Layer>
-            <Playhead type={PlayheadType.Current} position={this.state.currentPosition / 1000 * 60} height={256} />
+            <Playhead type={PlayheadType.Current} position={this.state.currentPosition / 1000 * 60} height={this.props.height} />
           </Layer>
           {this.state.targetPosition !== null &&
             <Layer>
-              <Playhead type={PlayheadType.Target} position={this.state.targetPosition} height={256} />
+              <Playhead type={PlayheadType.Target} position={this.state.targetPosition} height={this.props.height} />
             </Layer>
           }
-          <Layer>
-            <UnitMarkers
-              interval={1}
-              distance={this.state.scale.x}
-            />
-          </Layer>      
 
         </Stage>
 
         <div className="controls">
-          <button onClick={(e) => { this.handleZoom({ x: -2, y: 0 }) }}>
+          <button onClick={(e) => { this.handleZoom({ x: -4, y: 0 }) }}>
             zoom -
           </button>
-          <button onClick={(e) => { this.handleZoom({ x: 1, y: 0 }) }}>
+          <button onClick={(e) => { this.handleZoom({ x: 4, y: 0 }) }}>
             zoom +
           </button>
         </div>
