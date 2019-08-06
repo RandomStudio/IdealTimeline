@@ -65,7 +65,7 @@ class Block extends React.Component<IBlockProps> {
           console.log('dragging');
           this.props.changeCursor(CursorType.moving);
           const x = e.clientX / this.props.scale.x;
-          this.props.moveTargetPosition(x / this.props.scale.x);
+          this.props.moveTargetPosition(x);
         }}
         onDragEnd={(e: any) => {
           const x = e.clientX / this.props.scale.x;
