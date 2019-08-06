@@ -10,7 +10,7 @@ export interface ITrack {
   
   export interface ITrackProps extends ITrack, IBlockFunctions {
     height: number;
-    scaleX: number;
+    scale: { x: number, y: number };
     trackTitleWidth: number
   }
 
@@ -36,7 +36,7 @@ const Track: React.FC<ITrackProps> = (props) => {
             start={block.start}
             duration={block.duration}
             height={props.height}
-            scaleX={props.scaleX}
+            scale={props.scale}
             moveBlock={props.moveBlock}
             trimBlock={props.trimBlock}
             moveTargetPosition={props.moveTargetPosition}

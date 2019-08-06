@@ -25,13 +25,18 @@ export interface IBlockFunctions {
 export interface IBlockProps extends IBlock, IBlockFunctions {
   layerId: number,
   height: number,
-  scaleX: number
+  scale: { x: number, y: number }
 }
 
 const HANDLE_WIDTH = 10;
 
 
 class Block extends React.Component<IBlockProps> {
+
+  state = {
+    dragging: false,
+    offset: 0
+  }
 
   constrainDrag = (pos: { x: number, y: number }) => {
     return ({
@@ -41,8 +46,8 @@ class Block extends React.Component<IBlockProps> {
   }
 
   render = () => {
-    const x = this.props.start * this.props.scaleX;
-    const width = this.props.duration * this.props.scaleX;
+    const x = this.props.start * this.props.scale.x;
+    const width = this.props.duration * this.props.scale.x;
     const height = this.props.height;
 
     const style = {
@@ -54,21 +59,32 @@ class Block extends React.Component<IBlockProps> {
     return (
       <div
         className="block"
-        draggable={true}
         style={style}
+        draggable={true}
+        onDrag={(e: any) => {
+          console.log('dragging');
+          this.props.changeCursor(CursorType.moving);
+          const x = e.clientX / this.props.scale.x;
+          this.props.moveTargetPosition(x / this.props.scale.x);
+        }}
+        onDragEnd={(e: any) => {
+          const x = e.clientX / this.props.scale.x;
+          this.props.moveBlock(this.props.layerId, this.props.id, x);
+          this.props.moveTargetPosition(null);
+          this.props.changeCursor(CursorType.move);
+        }}
+
       >
-        <div className="name">
+        <div className="name" >
           {this.props.name}
         </div>
         <div
           key="trim-right"
-          draggable={true}
           onMouseEnter={() => this.props.changeCursor(CursorType.resize)}
           onMouseLeave={() => this.props.changeCursor(CursorType.default)}
         />
         <div
           key="trim-left"
-          draggable={true}
           onMouseEnter={() => this.props.changeCursor(CursorType.resize)}
           onMouseLeave={() => this.props.changeCursor(CursorType.default)}
         />

@@ -102,6 +102,7 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
   }
 
   moveTargetPosition = (newPosition: number | null) => {   
+    console.log('moveTargetPosition to', newPosition);
     this.setState({ targetPosition: newPosition });
   }
 
@@ -157,7 +158,7 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
               {...track}
               key={track.id}
               height={this.state.scale.y}
-              scaleX={this.state.scale.x}
+              scale={this.state.scale}
               trackTitleWidth={0}
               moveBlock={this.moveBlock}
               moveTargetPosition={this.moveTargetPosition}
