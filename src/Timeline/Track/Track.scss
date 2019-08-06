@@ -1,2 +1,10 @@
-.Layer {
+.track {
+
+  position: absolute;
+  width: 100%;
+
+  .name {
+    position: absolute;
+    color: yellow;
+  }
 }

@@ -15,12 +15,18 @@ export interface ITrack {
   }
 
 const Track: React.FC<ITrackProps> = (props) => {
+
+  const style = {
+    height: props.height,
+    top: props.height * props.id
+  }
+
   return (
-    <div>
-      <span>
+    <div className="track" style={style}>
+      <div className="name">
         {props.name}
-      </span>
-      <div>
+      </div>
+      <div className="blocks">
         {props.blocks.map(block => 
           <Block 
             key={block.id}

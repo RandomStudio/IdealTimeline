@@ -14,7 +14,8 @@
 }
 
 main {
-  padding: 1vw 1vh;
+  padding: 0;
+  border: 0;
 }
 
 .App-link {

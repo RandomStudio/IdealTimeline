@@ -1,4 +1,5 @@
 import React from 'react';
+import './Block.scss';
 
 export interface IBlock {
   id: number,
@@ -27,7 +28,7 @@ export interface IBlockProps extends IBlock, IBlockFunctions {
   scaleX: number
 }
 
-const handleWidth = 10;
+const HANDLE_WIDTH = 10;
 
 
 class Block extends React.Component<IBlockProps> {
@@ -42,11 +43,23 @@ class Block extends React.Component<IBlockProps> {
   render = () => {
     const x = this.props.start * this.props.scaleX;
     const width = this.props.duration * this.props.scaleX;
+    const height = this.props.height;
+
+    const style = {
+      width,
+      height,
+      left: x
+    }
+
     return (
       <div
+        className="block"
         draggable={true}
+        style={style}
       >
-        <span>{this.props.name}</span>
+        <div className="name">
+          {this.props.name}
+        </div>
         <div
           key="trim-right"
           draggable={true}
