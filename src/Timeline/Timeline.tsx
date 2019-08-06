@@ -1,11 +1,9 @@
 import React from 'react';
-import { Stage, Layer, Rect} from 'react-konva';
 
 import './Timeline.scss';
 import Track, { ITrack } from './Track/Track';
 import Playhead, { PlayheadType } from './Playhead/Playhead';
 import { CursorType } from './Track/Block/Block';
-import { KonvaEventObject } from 'konva/types/Node';
 //@ts-ignore
 import KeyHandler, { KEYPRESS } from 'react-key-handler';
 import { Vector2d } from 'konva/types/types';
@@ -33,8 +31,6 @@ interface ITimelineProps extends ITimeline {
 const NORMAL_HEIGHT = 64;
 
 class Timeline extends React.Component<ITimelineProps, ITimelineState> {
-
-  stageRef: React.Ref<Stage> = React.createRef();
 
   state = {
     currentPosition: 0,
@@ -129,10 +125,6 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
 
   changeCursor = (style: CursorType) => {
     // console.log('changeCursor to:', style);
-    if (this.stageRef) {
-      //@ts-ignore -- because .current does not exist on type?!
-      this.stageRef.current.container().style.cursor = style;
-    }
   }
 
   handleZoom = (delta: Vector2d) => {
@@ -158,45 +150,9 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
           onKeyHandle={() => { this.setPlayhead(0)}}
         />
   
-        <Stage 
-          ref={this.stageRef}
-          width={this.props.width}
-          height={this.props.height}
-          onClick={(e: KonvaEventObject<MouseEvent>) => { this.setPlayhead(e.evt.layerX * 1000 / 60) }}
-        >
-          <Layer>
-            <UnitMarkers
-              distance={this.state.scale.x}
-              parentWidth={this.props.width}
-              parentHeight={this.props.height}
-            />
-          </Layer>      
-
-          <Layer>
-            {tracks.map( (track) => 
-              <Track 
-                {...track} 
-                key={track.id} 
-                height={NORMAL_HEIGHT * this.state.scale.y}
-                scaleX={this.state.scale.x}
-                moveBlock={this.moveBlock}
-                trimBlock={this.trimBlock}
-                moveTargetPosition={this.moveTargetPosition}
-                changeCursor={this.changeCursor}
-                trackTitleWidth={this.state.trackTitleWidth}
-              /> 
-            )}
-          </Layer>
-          <Layer>
-            <Playhead type={PlayheadType.Current} position={this.state.currentPosition / 1000 * 60} height={this.props.height} />
-          </Layer>
-          {this.state.targetPosition !== null &&
-            <Layer>
-              <Playhead type={PlayheadType.Target} position={this.state.targetPosition} height={this.props.height} />
-            </Layer>
-          }
-
-        </Stage>
+       <div>
+         Timeline goes here
+       </div>
 
         <div className="controls">
           <button onClick={(e) => { this.handleZoom({ x: -4, y: 0 }) }}>
