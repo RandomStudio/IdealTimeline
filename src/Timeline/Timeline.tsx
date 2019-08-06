@@ -6,7 +6,6 @@ import Playhead, { PlayheadType } from './Playhead/Playhead';
 import { CursorType } from './Track/Block/Block';
 //@ts-ignore
 import KeyHandler, { KEYPRESS } from 'react-key-handler';
-import { Vector2d } from 'konva/types/types';
 import UnitMarkers from './UnitMarkers/UnitMarkers';
 
 export interface ITimeline {
@@ -19,7 +18,7 @@ export interface ITimelineState {
   playing: boolean,
   lastTime: number | null,
   tracks: ITrack[],
-  scale: Vector2d,
+  scale: { x: number, y: number },
   trackTitleWidth: number
 }
 
@@ -27,8 +26,6 @@ interface ITimelineProps extends ITimeline {
   width: number,
   height: number
 }  
-
-const NORMAL_HEIGHT = 64;
 
 class Timeline extends React.Component<ITimelineProps, ITimelineState> {
 
@@ -38,7 +35,7 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
     playing: false,
     lastTime: null,
     tracks: [],
-    scale: { x: 100.0, y: 1.0 },
+    scale: { x: 100.0, y: 64.0 },
     trackTitleWidth: 0
   } as ITimelineState;
 
@@ -127,7 +124,7 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
     // console.log('changeCursor to:', style);
   }
 
-  handleZoom = (delta: Vector2d) => {
+  handleZoom = (delta: { x: number, y: number }) => {
     const { scale } = this.state;
     scale.x = scale.x + delta.x;
     scale.y = scale.y + delta.y;
@@ -151,7 +148,19 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
         />
   
        <div>
-         Timeline goes here
+          {tracks.map(track => 
+            <Track 
+              {...track}
+              key={track.id}
+              height={this.state.scale.y}
+              scaleX={this.state.scale.x}
+              trackTitleWidth={0}
+              moveBlock={this.moveBlock}
+              moveTargetPosition={this.moveTargetPosition}
+              trimBlock={this.trimBlock}
+              changeCursor={this.changeCursor}
+            />
+          )}
        </div>
 
         <div className="controls">

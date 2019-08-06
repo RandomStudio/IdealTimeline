@@ -2,8 +2,6 @@ import React from 'react';
 import './Track.scss';
 import Block, { IBlock, IBlockFunctions } from './Block/Block';
 
-import { Group, Text } from 'react-konva';
-
 export interface ITrack {
     id: number,
     name: string;
@@ -18,15 +16,11 @@ export interface ITrack {
 
 const Track: React.FC<ITrackProps> = (props) => {
   return (
-    <Group
-      y={props.height * props.id}
-    >
-      <Text
-        text={props.name}
-      />
-      <Group
-        x={props.trackTitleWidth}
-      >
+    <div>
+      <span>
+        {props.name}
+      </span>
+      <div>
         {props.blocks.map(block => 
           <Block 
             key={block.id}
@@ -43,8 +37,8 @@ const Track: React.FC<ITrackProps> = (props) => {
             changeCursor={props.changeCursor}
           />
         )}
-      </Group>
-    </Group>
+      </div>
+    </div>
   );
 }
 
