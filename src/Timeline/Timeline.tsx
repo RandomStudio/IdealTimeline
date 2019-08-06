@@ -133,6 +133,10 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
 
   render = () => {
     const tracks = this.state.tracks;
+
+    const tracksStyle = {
+      height: this.state.tracks.length * this.state.scale.y
+    }
     return (
       <div className="Timeline">
   
@@ -147,7 +151,7 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
           onKeyHandle={() => { this.setPlayhead(0)}}
         />
   
-       <div>
+       <div className="tracks" style={tracksStyle}>
           {tracks.map(track => 
             <Track 
               {...track}
