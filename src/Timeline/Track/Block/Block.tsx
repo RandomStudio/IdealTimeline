@@ -80,10 +80,25 @@ class Block extends React.Component<IBlockProps> {
       left: x
     }
 
+    const trimStyle = {
+      width: HANDLE_WIDTH,
+      height
+    }
+
+    const trimStyleLeft = {
+      ...trimStyle,
+      left: 0
+    }
+
+    const trimStyleRight = {
+      ...trimStyle,
+      left: width - HANDLE_WIDTH
+    }
+
     return (
       <div
         ref={this.ref}
-        className="block"
+        className="Block"
         style={style}
         draggable={true}
         onDragStart={(e: React.DragEvent) => {
@@ -106,12 +121,14 @@ class Block extends React.Component<IBlockProps> {
           {this.props.name}
         </div>
         <div
-          key="trim-right"
+          className="trim left"
+          style={trimStyleLeft}
           onMouseEnter={() => this.props.changeCursor(CursorType.resize)}
           onMouseLeave={() => this.props.changeCursor(CursorType.default)}
         />
         <div
-          key="trim-left"
+          style={trimStyleRight}
+          className="trim right"
           onMouseEnter={() => this.props.changeCursor(CursorType.resize)}
           onMouseLeave={() => this.props.changeCursor(CursorType.default)}
         />

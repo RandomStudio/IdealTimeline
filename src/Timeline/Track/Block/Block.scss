@@ -1,13 +1,26 @@
-.block {
+.Block {
   box-sizing: border-box;
   background-color: black;
   color: white;
-  border: 1px solid red;
+  border: 1px solid yellow;
 
   position: absolute;
 
   .name {
     position: absolute;
     color: white;
+  }
+
+  .trim {
+    position: absolute;
+    z-index: 1;
+    opacity: 0.5;
+    &.left {
+      background-color: green;
+      
+    }
+    &.right {
+      background-color: red;
+    }
   }
 }
