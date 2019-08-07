@@ -50,16 +50,16 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
   
   tick = (now: number) => {
     requestAnimationFrame(this.tick);
-    if (!this.state.lastTime) {
+    if (this.state.lastTime === null) {
       this.setState({ lastTime: now });
     }
     if (this.state.lastTime) {
       const delta = now - this.state.lastTime;
       // console.log('now', now, 'delta', delta);
       if (delta > 1000/60) {
-        this.setState({ lastTime: now });
         // console.log('tick', delta);
         if (this.state.playing) {
+          this.setState({ lastTime: now });
           this.setState({ currentPosition: Math.fround(this.state.currentPosition + delta/1000)});
         }
       }
@@ -116,7 +116,7 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
       const before = prevState.playing;
       const after = !prevState.playing;
       console.log('PLAYING: was', before, 'now', after);
-      return { ...prevState, playing: after, timer: null };
+      return { ...prevState, playing: after, timer: null, lastTime: null };
     });
   }
 
