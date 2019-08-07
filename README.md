@@ -10,7 +10,7 @@ Screenshot of the current state of the interface:
 ## Tech
 Currently using:
 * react
-* [react-konva](https://github.com/konvajs/react-konva) (and therefore [konva](https://konvajs.org/) itself): for declarative-style 2D canvas drawing
+* TypeScript
 
 ## Design
 
