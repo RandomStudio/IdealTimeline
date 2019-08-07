@@ -32,6 +32,15 @@ export interface IBlockProps extends IBlock, IBlockFunctions {
 const HANDLE_WIDTH = 10;
 
 
+export const absoluteToTimelinePosition = (mouseX: number, timelineOffset: number, dragOffset: number, scaleX: number): number => 
+  (mouseX - timelineOffset + dragOffset) / scaleX;
+
+export const timelineToAbsolute = (x: number, scaleX: number): number =>
+  x * scaleX;
+
+
+
+
 class Block extends React.Component<IBlockProps> {
 
   private ref: React.RefObject<HTMLDivElement> = React.createRef();
@@ -49,8 +58,7 @@ class Block extends React.Component<IBlockProps> {
     });
   }
 
-  absoluteToTimelinePosition = (mouseX: number): number => 
-    (mouseX - this.props.offset.x + this.state.dragStartOffset) / this.props.scale.x;
+
 
   offsetInBlock = (mouseX: number): number => {
     if (this.ref && this.ref.current) {
@@ -83,14 +91,14 @@ class Block extends React.Component<IBlockProps> {
         }}
         onDrag={(e: any) => {
           this.props.changeCursor(CursorType.moving);
-          const x = this.absoluteToTimelinePosition(e.clientX)
-          this.props.moveTargetPosition(this.offsetInBlock(x));
+          const x = e.clientX;
+          this.props.moveTargetPosition(absoluteToTimelinePosition(x, this.props.offset.x, this.state.dragStartOffset, this.props.scale.x));
         }}
         onDragEnd={(e: any) => {
           // const x = (e.clientX - this.props.offset.x + this.state.dragStartOffset) / this.props.scale.x;
-          const x = this.absoluteToTimelinePosition(e.clientX)
+          const x = absoluteToTimelinePosition(e.clientX, this.props.offset.x, this.state.dragStartOffset, this.props.scale.x)
           this.props.moveBlock(this.props.layerId, this.props.id, x);
-          this.props.moveTargetPosition(null);
+          // this.props.moveTargetPosition(null);
           this.props.changeCursor(CursorType.move);
         }}
       >

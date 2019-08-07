@@ -134,6 +134,7 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
     this.setState({ scale });
   }
 
+
   render = () => {
     const tracks = this.state.tracks;
     const rect = (this.ref && this.ref.current) 
@@ -160,7 +161,7 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
           onKeyHandle={() => { this.setPlayhead(0)}}
         />
   
-       <div className="tracks" style={tracksStyle}>
+        <div className="tracks" style={tracksStyle}>
           {tracks.map(track => 
             <Track 
               {...track}
@@ -175,7 +176,16 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
               offset={offset}
             />
           )}
-       </div>
+        </div>
+
+      {this.state.targetPosition &&
+       <Playhead 
+          position={this.state.targetPosition}
+          type={PlayheadType.Target}
+          height={this.state.tracks.length * this.state.scale.y}
+          scale={this.state.scale}
+       />
+      }
 
         <div className="controls">
           <button onClick={(e) => { this.handleZoom({ x: -4, y: 0 }) }}>

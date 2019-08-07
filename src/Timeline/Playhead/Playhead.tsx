@@ -1,6 +1,7 @@
 import React from 'react';
-import { Rect } from 'react-konva';
 import './Playhead.scss';
+import { timelineToAbsolute } from '../Track/Block/Block';
+
 
 export enum PlayheadType {
   Current = "Current",
@@ -10,29 +11,19 @@ export enum PlayheadType {
 export interface IPlayheadProps {
   position: number,
   type: PlayheadType,
-  height: number
+  height: number,
+  scale: { x: number, y: number }
 }
-
-const scale = 1;
-const start = 128;
 
 const Playhead: React.FC<IPlayheadProps> = (props) => {
 
   const style = {
-    left: props.type === PlayheadType.Current 
-      ? props.position / scale + start 
-      : props.position / scale,
+    left: timelineToAbsolute(props.position, props.scale.x),
+    height: props.height,
     backgroundColor: props.type === PlayheadType.Current ? 'green' : 'grey'
   }
   return (
-    <Rect
-      x={props.position}
-      y={0}
-      width={2}
-      height={props.height}
-      fill={props.type === PlayheadType.Current ? "blue": "gray"}
-      opacity={0.6}
-    />
+    <div className="Playhead" style={style} />
   )
 }
 
