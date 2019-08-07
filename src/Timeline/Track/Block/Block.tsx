@@ -49,13 +49,15 @@ class Block extends React.Component<IBlockProps> {
     });
   }
 
-  offsetInBlock = (mouseX: number) => {
-    if (this.ref) {
-      const thisBlock = this.ref.current;
-      if (thisBlock) {
-        const blockX = thisBlock.getBoundingClientRect().left;
-        return blockX - mouseX;
-      }
+  absoluteToTimelinePosition = (mouseX: number): number => 
+    (mouseX - this.props.offset.x + this.state.dragStartOffset) / this.props.scale.x;
+
+  offsetInBlock = (mouseX: number): number => {
+    if (this.ref && this.ref.current) {
+      const blockX = this.ref.current.getBoundingClientRect().left;
+      return blockX - mouseX;
+    } else {
+      return 0;
     }
   }
 
@@ -80,18 +82,13 @@ class Block extends React.Component<IBlockProps> {
           this.setState({ dragStartOffset: this.offsetInBlock(e.clientX) });
         }}
         onDrag={(e: any) => {
-          if (this.ref) {
-            const thisBlock = this.ref.current;
-            if (thisBlock) {
-              // console.log('dragging, element absolute', thisBlock.getBoundingClientRect());
-            }
-          }
           this.props.changeCursor(CursorType.moving);
-          const x = e.clientX / this.props.scale.x;
-          this.props.moveTargetPosition(x);
+          const x = this.absoluteToTimelinePosition(e.clientX)
+          this.props.moveTargetPosition(this.offsetInBlock(x));
         }}
         onDragEnd={(e: any) => {
-          const x = (e.clientX - this.props.offset.x + this.state.dragStartOffset) / this.props.scale.x;
+          // const x = (e.clientX - this.props.offset.x + this.state.dragStartOffset) / this.props.scale.x;
+          const x = this.absoluteToTimelinePosition(e.clientX)
           this.props.moveBlock(this.props.layerId, this.props.id, x);
           this.props.moveTargetPosition(null);
           this.props.changeCursor(CursorType.move);
