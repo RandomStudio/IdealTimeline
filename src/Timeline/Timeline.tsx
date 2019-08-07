@@ -58,7 +58,7 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
         this.setState({ lastTime: now });
         // console.log('tick', delta);
         if (this.state.playing) {
-          this.setState({ currentPosition: Math.fround(this.state.currentPosition + delta)});
+          this.setState({ currentPosition: Math.fround(this.state.currentPosition + delta/1000)});
         }
       }
     }
@@ -186,6 +186,13 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
           scale={this.state.scale}
        />
       }
+
+      <Playhead
+        position={this.state.currentPosition}
+        type={PlayheadType.Current}
+        height={this.state.tracks.length * this.state.scale.y}
+        scale={this.state.scale}
+      />
 
         <div className="controls">
           <button onClick={(e) => { this.handleZoom({ x: -4, y: 0 }) }}>
