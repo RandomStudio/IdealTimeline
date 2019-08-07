@@ -133,6 +133,15 @@ class Block extends React.Component<IBlockProps> {
           style={trimStyleLeft}
           onMouseEnter={() => this.props.changeCursor(CursorType.resize)}
           onMouseLeave={() => this.props.changeCursor(CursorType.default)}
+          onDrag={(e: React.DragEvent) => {
+            const mouseX = e.clientX;
+            const offsetX = mouseX - x - this.props.offset.x;
+            const deltaX = offsetX;
+            const timelineDeltaX = absoluteToTimelinePosition(deltaX, 0, 0, this.props.scale.x);
+            if (mouseX > 0) { // ignore spurious positions (on drag stop)
+              this.props.trimBlock(this.props.trackId, this.props.id, timelineDeltaX, -timelineDeltaX)
+            }
+          }}
         />
         <div
           draggable={true}
