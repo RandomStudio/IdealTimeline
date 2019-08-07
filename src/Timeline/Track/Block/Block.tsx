@@ -91,12 +91,12 @@ class Block extends React.Component<IBlockProps> {
 
     const trimStyleLeft = {
       ...trimStyle,
-      left: -HANDLE_WIDTH
+      left: 0
     }
 
     const trimStyleRight = {
       ...trimStyle,
-      left: width
+      left: width - HANDLE_WIDTH
     }
 
     return (
@@ -143,8 +143,11 @@ class Block extends React.Component<IBlockProps> {
           onDrag={(e: React.DragEvent) => {
             const mouseX = e.clientX;
             const offsetX = this.offsetInBlock(mouseX);
-            const deltaX = absoluteToTimelinePosition(offsetX, this.props.offset.x, 0, this.props.scale.x);
-            this.props.trimBlock(this.props.trackId, this.props.id, 0, deltaX)
+            const deltaX = offsetX - width;
+            const timelineDeltaX = absoluteToTimelinePosition(deltaX, 0, 0, this.props.scale.x);
+            if (mouseX > 0) { // ignore spurious positions (on drag stop)
+              this.props.trimBlock(this.props.trackId, this.props.id, 0, timelineDeltaX)
+            }
           }}
         />
       </div>

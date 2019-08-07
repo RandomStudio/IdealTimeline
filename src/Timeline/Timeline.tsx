@@ -91,8 +91,8 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
           blocks: track.blocks.map(block => block.id === blockId
             ? {
               ...block,
-              start: block.start + startDelta / this.state.scale.x,
-              duration: block.duration + durationDelta / this.state.scale.x
+              start: block.start + startDelta,
+              duration: block.duration + durationDelta
             }
             : block
           )
