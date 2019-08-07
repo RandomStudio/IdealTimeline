@@ -65,7 +65,7 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
   }
 
   moveBlock = (trackId: number, blockId: number, newStart: number) => {
-    console.log(`moveBlock ${trackId}/${blockId} to x: ${newStart}`);
+    // console.log(`moveBlock ${trackId}/${blockId} to x: ${newStart}`);
     const tracks = this.state.tracks.map(track => track.id === trackId
       ? { 
         ...track, 
@@ -84,7 +84,7 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
   }
 
   trimBlock = (trackId: number, blockId: number, startDelta: number, durationDelta: number) => {
-    // console.log(`trimBlock ${trackId}/${blockId}: startDelta: ${startDelta}, durationDelta: ${durationDelta}`);
+    console.log(`trimBlock ${trackId}/${blockId}: startDelta: ${startDelta}, durationDelta: ${durationDelta}`);
     const tracks = this.state.tracks.map(track => track.id === trackId
         ? { 
           ...track, 
@@ -104,7 +104,7 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
   }
 
   moveTargetPosition = (newPosition: number | null) => {   
-    console.log('moveTargetPosition to', newPosition);
+    // console.log('moveTargetPosition to', newPosition);
     this.setState({ targetPosition: newPosition });
   }
 

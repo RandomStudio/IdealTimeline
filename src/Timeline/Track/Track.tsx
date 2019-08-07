@@ -32,7 +32,7 @@ const Track: React.FC<ITrackProps> = (props) => {
           <Block 
             key={block.id}
             id={block.id}
-            layerId={props.id}
+            trackId={props.id}
             name={block.name}
             start={block.start}
             duration={block.duration}
