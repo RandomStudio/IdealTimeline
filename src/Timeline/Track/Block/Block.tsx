@@ -33,10 +33,13 @@ const HANDLE_WIDTH = 10;
 
 class Block extends React.Component<IBlockProps> {
 
+  private ref: React.RefObject<HTMLDivElement> = React.createRef();
+
   state = {
     dragging: false,
     offset: 0
   }
+  
 
   constrainDrag = (pos: { x: number, y: number }) => {
     return ({
@@ -58,11 +61,17 @@ class Block extends React.Component<IBlockProps> {
 
     return (
       <div
+        ref={this.ref}
         className="block"
         style={style}
         draggable={true}
         onDrag={(e: any) => {
-          console.log('dragging');
+          if (this.ref) {
+            const thisBlock = this.ref.current;
+            if (thisBlock) {
+              console.log('dragging, element absolute', thisBlock.getBoundingClientRect());
+            }
+          }
           this.props.changeCursor(CursorType.moving);
           const x = e.clientX / this.props.scale.x;
           this.props.moveTargetPosition(x);
@@ -73,9 +82,8 @@ class Block extends React.Component<IBlockProps> {
           this.props.moveTargetPosition(null);
           this.props.changeCursor(CursorType.move);
         }}
-
       >
-        <div className="name" >
+        <div className="name">
           {this.props.name}
         </div>
         <div
