@@ -49,6 +49,16 @@ class Block extends React.Component<IBlockProps> {
     });
   }
 
+  offsetInBlock = (mouseX: number) => {
+    if (this.ref) {
+      const thisBlock = this.ref.current;
+      if (thisBlock) {
+        const blockX = thisBlock.getBoundingClientRect().left;
+        return blockX - mouseX;
+      }
+    }
+  }
+
   render = () => {
     const x = this.props.start * this.props.scale.x;
     const width = this.props.duration * this.props.scale.x;
@@ -67,7 +77,7 @@ class Block extends React.Component<IBlockProps> {
         style={style}
         draggable={true}
         onDragStart={(e: React.DragEvent) => {
-
+          this.setState({ dragStartOffset: this.offsetInBlock(e.clientX) });
         }}
         onDrag={(e: any) => {
           if (this.ref) {
@@ -81,7 +91,7 @@ class Block extends React.Component<IBlockProps> {
           this.props.moveTargetPosition(x);
         }}
         onDragEnd={(e: any) => {
-          const x = (e.clientX - this.props.offset.x) / this.props.scale.x;
+          const x = (e.clientX - this.props.offset.x + this.state.dragStartOffset) / this.props.scale.x;
           this.props.moveBlock(this.props.layerId, this.props.id, x);
           this.props.moveTargetPosition(null);
           this.props.changeCursor(CursorType.move);
