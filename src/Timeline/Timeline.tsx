@@ -19,7 +19,8 @@ export interface ITimelineState {
   lastTime: number | null,
   tracks: ITrack[],
   scale: { x: number, y: number },
-  trackTitleWidth: number
+  trackTitleWidth: number,
+  cursorStyle: CursorType
 }
 
 interface ITimelineProps extends ITimeline {
@@ -38,7 +39,8 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
     lastTime: null,
     tracks: [],
     scale: { x: 100.0, y: 64.0 },
-    trackTitleWidth: 0
+    trackTitleWidth: 0,
+    cursorStyle: CursorType.default
   } as ITimelineState;
 
   componentDidMount = () => {
@@ -124,7 +126,8 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
   }
 
   changeCursor = (style: CursorType) => {
-    // console.log('changeCursor to:', style);
+    console.log('changeCursor to:', style);
+    this.setState({ cursorStyle: style });
   }
 
   handleZoom = (delta: { x: number, y: number }) => {
@@ -147,8 +150,13 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
     const tracksStyle = {
       height: this.state.tracks.length * this.state.scale.y
     }
+
+    const style = {
+      cursor: this.state.cursorStyle
+    }
+
     return (
-      <div className="Timeline" ref={this.ref}>
+      <div className="Timeline" ref={this.ref} style={style}>
   
         <KeyHandler
           keyEventName={KEYPRESS}
@@ -186,7 +194,7 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
           scale={this.state.scale}
        />
       }
-
+      
       <Playhead
         position={this.state.currentPosition}
         type={PlayheadType.Current}

@@ -38,9 +38,6 @@ export const absoluteToTimelinePosition = (mouseX: number, timelineOffset: numbe
 export const timelineToAbsolute = (x: number, scaleX: number): number =>
   x * scaleX;
 
-
-
-
 class Block extends React.Component<IBlockProps> {
 
   private ref: React.RefObject<HTMLDivElement> = React.createRef();
@@ -122,6 +119,8 @@ class Block extends React.Component<IBlockProps> {
             this.props.moveBlock(this.props.trackId, this.props.id, x);
             this.props.changeCursor(CursorType.move);
           }}
+          onMouseEnter={() => this.props.changeCursor(CursorType.move)}
+          onMouseLeave={() => this.props.changeCursor(CursorType.default)}
         />
 
         <div className="name">
