@@ -11,6 +11,7 @@ export interface ITrack {
   export interface ITrackProps extends ITrack, IBlockFunctions {
     height: number;
     scale: { x: number, y: number };
+    offset: { x: number, y: number };
     trackTitleWidth: number
   }
 
@@ -41,6 +42,7 @@ const Track: React.FC<ITrackProps> = (props) => {
             trimBlock={props.trimBlock}
             moveTargetPosition={props.moveTargetPosition}
             changeCursor={props.changeCursor}
+            offset={props.offset}
           />
         )}
       </div>

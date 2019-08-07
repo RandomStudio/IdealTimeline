@@ -25,7 +25,8 @@ export interface IBlockFunctions {
 export interface IBlockProps extends IBlock, IBlockFunctions {
   layerId: number,
   height: number,
-  scale: { x: number, y: number }
+  scale: { x: number, y: number },
+  offset: { x: number, y: number }
 }
 
 const HANDLE_WIDTH = 10;
@@ -37,7 +38,7 @@ class Block extends React.Component<IBlockProps> {
 
   state = {
     dragging: false,
-    offset: 0
+    dragStartOffset: 0
   }
   
 
@@ -65,11 +66,14 @@ class Block extends React.Component<IBlockProps> {
         className="block"
         style={style}
         draggable={true}
+        onDragStart={(e: React.DragEvent) => {
+
+        }}
         onDrag={(e: any) => {
           if (this.ref) {
             const thisBlock = this.ref.current;
             if (thisBlock) {
-              console.log('dragging, element absolute', thisBlock.getBoundingClientRect());
+              // console.log('dragging, element absolute', thisBlock.getBoundingClientRect());
             }
           }
           this.props.changeCursor(CursorType.moving);
@@ -77,7 +81,7 @@ class Block extends React.Component<IBlockProps> {
           this.props.moveTargetPosition(x);
         }}
         onDragEnd={(e: any) => {
-          const x = e.clientX / this.props.scale.x;
+          const x = (e.clientX - this.props.offset.x) / this.props.scale.x;
           this.props.moveBlock(this.props.layerId, this.props.id, x);
           this.props.moveTargetPosition(null);
           this.props.changeCursor(CursorType.move);

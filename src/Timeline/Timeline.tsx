@@ -29,6 +29,8 @@ interface ITimelineProps extends ITimeline {
 
 class Timeline extends React.Component<ITimelineProps, ITimelineState> {
 
+  private ref: React.RefObject<HTMLDivElement> = React.createRef();
+
   state = {
     currentPosition: 0,
     targetPosition: null,
@@ -43,24 +45,24 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
     this.setState({ tracks: this.props.tracks });
     requestAnimationFrame(this.tick);
   }
-
   
   tick = (now: number) => {
     requestAnimationFrame(this.tick);
     if (!this.state.lastTime) {
-      this.state.lastTime = now;
+      this.setState({ lastTime: now });
     }
-    const delta = now - this.state.lastTime;
-    // console.log('now', now, 'delta', delta);
-    if (delta > 1000/60) {
-      this.state.lastTime = now;
-      // console.log('tick', delta);
-      if (this.state.playing) {
-        this.setState({ currentPosition: Math.fround(this.state.currentPosition + delta)});
+    if (this.state.lastTime) {
+      const delta = now - this.state.lastTime;
+      // console.log('now', now, 'delta', delta);
+      if (delta > 1000/60) {
+        this.setState({ lastTime: now });
+        // console.log('tick', delta);
+        if (this.state.playing) {
+          this.setState({ currentPosition: Math.fround(this.state.currentPosition + delta)});
+        }
       }
     }
   }
-
 
   moveBlock = (trackId: number, blockId: number, newStart: number) => {
     console.log(`moveBlock ${trackId}/${blockId} to x: ${newStart}`);
@@ -134,12 +136,18 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
 
   render = () => {
     const tracks = this.state.tracks;
+    const rect = (this.ref && this.ref.current) 
+      ? this.ref.current.getBoundingClientRect() 
+      : null;
+    const offset = rect === null 
+      ? { x: 0, y: 0 }
+      : { x: rect.left, y: rect.top };
 
     const tracksStyle = {
       height: this.state.tracks.length * this.state.scale.y
     }
     return (
-      <div className="Timeline">
+      <div className="Timeline" ref={this.ref}>
   
         <KeyHandler
           keyEventName={KEYPRESS}
@@ -164,6 +172,7 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
               moveTargetPosition={this.moveTargetPosition}
               trimBlock={this.trimBlock}
               changeCursor={this.changeCursor}
+              offset={offset}
             />
           )}
        </div>
@@ -182,8 +191,6 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
             {JSON.stringify(this.state)}
           </code>
         </div>
-
-
 
       </div>
     );
