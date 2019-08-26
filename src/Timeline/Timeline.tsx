@@ -21,7 +21,7 @@ export interface ITimelineState {
   scale: { x: number, y: number },
   trackTitleWidth: number,
   cursorStyle: CursorType,
-  currentUnderPlayhead: IBlockWithTrack[]
+  currentUnderPlayhead: IActiveBlock[]
 }
 
 interface ITimelineProps extends ITimeline {
@@ -29,24 +29,28 @@ interface ITimelineProps extends ITimeline {
   height: number
 }  
 
-interface IBlockWithTrack extends IBlock {
-  trackId: number
+interface IActiveBlock extends IBlock {
+  trackId: number,
+  progress: number
 }
 
-const getCurrentBlocksUnderPlayhead = (currentPosition: number, tracks: ITrack[]): IBlockWithTrack[] => 
+const getCurrentBlocksUnderPlayhead = (currentPosition: number, tracks: ITrack[]): IActiveBlock[] => 
   tracks.reduce( (acc, current) => {
-    const activeBlock = current.blocks.find(b => currentPosition >= b.start && currentPosition <= (b.start +  b.duration))
-      return (activeBlock !== undefined) ?
+    const activeBlock = current.blocks.find(b => 
+      currentPosition >= b.start && currentPosition <= (b.start +  b.duration)
+    );
+    return (activeBlock !== undefined) ?
       [
         ...acc, 
         {
           ...activeBlock,
-          trackId: current.id
+          trackId: current.id,
+          progress: (currentPosition - activeBlock.start) / activeBlock.duration
         }
       ]
       : acc
   }
-  , [] as IBlockWithTrack[]);
+  , [] as IActiveBlock[]);
 
 
 class Timeline extends React.Component<ITimelineProps, ITimelineState> {
