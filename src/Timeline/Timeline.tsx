@@ -164,7 +164,6 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
   }
 
   changeCursor = (style: CursorType) => {
-    console.log('changeCursor to:', style);
     this.setState({ cursorStyle: style });
   }
 
