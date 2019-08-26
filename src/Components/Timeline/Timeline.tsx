@@ -136,6 +136,8 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
   moveBlock = (srcTrackId: number, blockId: string, newStart: number, dstTrackId: number) => {
     // console.log(`moveBlock ${trackId}/${blockId} to x: ${newStart}`);
 
+    const constrainedNewStart = newStart < 0 ? 0 : newStart;
+
     if (srcTrackId === dstTrackId) {
       const tracks = this.state.tracks.map(track => track.id === dstTrackId
         ? { 
@@ -143,7 +145,7 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
           blocks: track.blocks.map(block => block.id === blockId
             ? {
               ...block,
-              start: newStart
+              start: constrainedNewStart
             }
             : block
           )
@@ -165,13 +167,14 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
             blocks: track.blocks.filter(b => b.id !== blockId)
           }
         } else if (track.id === dstTrackId && originalBlock !== undefined) {
+          // If same as destination track, append block with new UUID (and new start point)...
           return {
             ...track,
             blocks: [
               ...track.blocks, 
               {
                 ...originalBlock,
-                start: newStart,
+                start: constrainedNewStart,
                 id: newId
               }
             ]
