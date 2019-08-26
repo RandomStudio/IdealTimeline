@@ -1,6 +1,6 @@
 import React from 'react';
 import './Block.scss';
-import { IScale } from '../../Timeline';
+import { IVector2 } from '../../Timeline';
 
 export interface IBlock {
   id: number,
@@ -26,7 +26,7 @@ export interface IBlockFunctions {
 export interface IBlockProps extends IBlock, IBlockFunctions {
   trackId: number,
   height: number,
-  scale: IScale,
+  scale: IVector2,
   offset: { x: number, y: number }
 }
 

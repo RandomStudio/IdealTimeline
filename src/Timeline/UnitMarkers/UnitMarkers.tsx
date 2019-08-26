@@ -1,11 +1,14 @@
 import React from 'react';
 import './UnitMarkers.scss';
 
-import { IScale} from '../Timeline';
+import { IVector2} from '../Timeline';
+import { absoluteToTimelinePosition } from '../Track/Block/Block';
 
 interface IUnitMarkersProps {
-  scale: IScale,
-  parentWidth: number
+  scale: IVector2,
+  offset: IVector2,
+  parentWidth: number,
+  setPlayhead: (position: number) => void
 }
 
 const UnitMarkers: React.FC<IUnitMarkersProps> = (props) => {
@@ -15,16 +18,20 @@ const UnitMarkers: React.FC<IUnitMarkersProps> = (props) => {
       left: index * props.scale.x
     }
     return (
-      <div className="marker" style={style}>
+      <div className="marker" style={style} key={index}>
         {index}
       </div>
 
     );
   });
 
-  return <div className="UnitMarkers">
-    {markers}
-  </div>
+  return (
+    <div className="UnitMarkers" onClick={(e) => 
+      props.setPlayhead(absoluteToTimelinePosition(e.clientX, props.offset.x, 0, props.scale.x))
+    }>
+      {markers}
+    </div>
+  )
 }
 
 export default UnitMarkers;
