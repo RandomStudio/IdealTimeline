@@ -7,6 +7,8 @@ Screenshot of the current state of the interface:
 
 ![current state](./docs/images/current-state.gif)
 
+(GIF created with handy ffmpeg command: `ffmpeg -i Kazam_screencast_00001.mp4 -filter_complex "[0:v] split [a][b];[a] palettegen [p];[b][p] paletteuse" current-state.gif`)
+
 ## Tech
 Currently using:
 * react

@@ -3,7 +3,7 @@ import React from 'react';
 import './Timeline.scss';
 import Track, { ITrack } from './Track/Track';
 import Playhead, { PlayheadType } from './Playhead/Playhead';
-import { CursorType } from './Track/Block/Block';
+import { CursorType, IBlock } from './Track/Block/Block';
 //@ts-ignore
 import KeyHandler, { KEYPRESS } from 'react-key-handler';
 import UnitMarkers from './UnitMarkers/UnitMarkers';
@@ -20,13 +20,32 @@ export interface ITimelineState {
   tracks: ITrack[],
   scale: { x: number, y: number },
   trackTitleWidth: number,
-  cursorStyle: CursorType
+  cursorStyle: CursorType,
+  currentUnderPlayhead: IBlockWithTrack[]
 }
 
 interface ITimelineProps extends ITimeline {
   width: number,
   height: number
 }  
+
+interface IBlockWithTrack extends IBlock {
+  trackId: number
+}
+
+const getCurrentBlocksUnderPlayhead = (currentPosition: number, tracks: ITrack[]): IBlockWithTrack[] => {
+  let blocksWithTracks: IBlockWithTrack[] = [];
+  tracks.forEach(track => {
+    const activeBlock = track.blocks.find(b =>  
+      currentPosition >= b.start && currentPosition <= (b.start +  b.duration));
+    if (activeBlock !== undefined) {
+      const blockWithTracks = { ...activeBlock, trackId: track.id };
+      blocksWithTracks.push(blockWithTracks);
+    }
+  });
+  return blocksWithTracks;
+}
+  
 
 class Timeline extends React.Component<ITimelineProps, ITimelineState> {
 
@@ -40,7 +59,8 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
     tracks: [],
     scale: { x: 100.0, y: 64.0 },
     trackTitleWidth: 0,
-    cursorStyle: CursorType.default
+    cursorStyle: CursorType.default,
+    currentUnderPlayhead: []
   } as ITimelineState;
 
   componentDidMount = () => {
@@ -59,8 +79,12 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
       if (delta > 1000/60) {
         // console.log('tick', delta);
         if (this.state.playing) {
-          this.setState({ lastTime: now });
-          this.setState({ currentPosition: Math.fround(this.state.currentPosition + delta/1000)});
+          const newPosition = Math.fround(this.state.currentPosition + delta/1000);
+          this.setState({ 
+            lastTime: now,
+            currentPosition: newPosition,
+            currentUnderPlayhead: getCurrentBlocksUnderPlayhead(newPosition, this.state.tracks)
+          });
         }
       }
     }
