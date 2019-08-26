@@ -153,8 +153,35 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
       // console.log('updated tracks:', tracks);
       this.setState({ tracks });
     } else {
+      const originalTrack = this.state.tracks.find(t => t.id === srcTrackId);
+      const originalBlock = originalTrack ? originalTrack.blocks.find(b => b.id === blockId) : undefined;
 
-      console.warn('need to handle this better', v4());
+      const newId = v4();
+      const tracks = this.state.tracks.map(track => {
+        if (track.id === srcTrackId) {
+          // If same as source track, filter out from that track...
+          return {
+            ...track,
+            blocks: track.blocks.filter(b => b.id !== blockId)
+          }
+        } else if (track.id === dstTrackId && originalBlock !== undefined) {
+          return {
+            ...track,
+            blocks: [
+              ...track.blocks, 
+              {
+                ...originalBlock,
+                start: newStart,
+                id: newId
+              }
+            ]
+          }
+        } else {
+          // Neither source nor destination - just pass through unchanged...
+          return track
+        }
+      });
+      this.setState({ tracks });
     }
   }
 
