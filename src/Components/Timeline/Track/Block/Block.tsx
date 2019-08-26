@@ -6,7 +6,7 @@ export interface IBlock {
   id: string,
   name: string,
   start: number,
-  duration: number,
+  duration: number
 }
 
 export enum CursorType {
@@ -28,7 +28,8 @@ export interface IBlockProps extends IBlock, IBlockFunctions {
   trackId: number,
   height: number,
   scale: IVector2,
-  offset: { x: number, y: number }
+  offset: { x: number, y: number },
+  selected: boolean
 }
 
 const HANDLE_WIDTH = 10;
@@ -91,7 +92,7 @@ class Block extends React.Component<IBlockProps> {
     return (
       <div
         ref={this.ref}
-        className="Block"
+        className={`Block ${this.props.selected ? 'selected': null}`}
         style={containerStyle}
       >
         <div className="movable"
@@ -100,6 +101,7 @@ class Block extends React.Component<IBlockProps> {
           onClick={(e: React.MouseEvent) => { this.props.selectBlock(this.props.trackId, this.props.id) }}
           onDragStart={(e: React.DragEvent) => {
             this.setState({ dragStartOffset: this.offsetInBlock(e.clientX) });
+            this.props.selectBlock(this.props.trackId, this.props.id);
           }}
           onDrag={(e: React.DragEvent) => {
             this.props.changeCursor(CursorType.moving);

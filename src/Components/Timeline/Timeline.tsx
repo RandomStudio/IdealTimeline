@@ -30,7 +30,7 @@ export interface ITimelineState extends ITimelinePlayback {
   tracks: ITrack[],
   trackTitleWidth: number,
   cursorStyle: CursorType,
-  selectedBlock: IBlock | null
+  selectedBlocks: IBlock[]
 }
 
 interface ITimelineProps extends ITimeline {
@@ -43,6 +43,20 @@ interface ITimelineProps extends ITimeline {
 interface IActiveBlock extends IBlock {
   trackId: number,
   progress: number
+}
+
+const getMatchingBlock = (tracks: ITrack[], trackId: number, blockId: string) : IBlock | null => {
+  const track = tracks.find(t => t.id === trackId);
+  if (track === undefined) {
+    return null;
+  } else {
+    const block = track.blocks.find(b => b.id === blockId);
+    if (block === undefined) {
+      return null;
+    } else {
+      return block;
+    }
+  }
 }
 
 const getCurrentBlocksUnderPlayhead = (currentPosition: number, tracks: ITrack[]): IActiveBlock[] => 
@@ -99,7 +113,7 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
     tracks: [],
     trackTitleWidth: 0,
     cursorStyle: CursorType.default,
-    selectedBlock: null,
+    selectedBlocks: [],
     currentUnderPlayhead: []
   } as ITimelineState;
 
@@ -236,6 +250,10 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
 
   selectBlock = (trackId: number, blockId: string) => {
     console.log('select block', trackId, blockId);
+    const block = getMatchingBlock(this.state.tracks, trackId, blockId);
+    if (block !== null) {
+      this.setState({ selectedBlocks: [block] });
+    }
   }
 
 
@@ -302,6 +320,7 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
                 trimBlock={this.trimBlock}
                 changeCursor={this.changeCursor}
                 selectBlock={this.selectBlock}
+                selectedBlocks={this.state.selectedBlocks}
                 offset={offset}
               />
             )}

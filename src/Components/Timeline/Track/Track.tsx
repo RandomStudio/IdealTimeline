@@ -6,6 +6,7 @@ export interface ITrack {
     id: number,
     name: string;
     blocks: IBlock[],
+    selectedBlocks: IBlock[]
   }
   
   export interface ITrackProps extends ITrack, IBlockFunctions {
@@ -46,6 +47,7 @@ const Track: React.FC<ITrackProps> = (props) => {
             changeCursor={props.changeCursor}
             selectBlock={props.selectBlock}
             offset={props.offset}
+            selected={props.selectedBlocks.find(b => b.id === block.id) !== undefined}
           />
         )}
       </div>

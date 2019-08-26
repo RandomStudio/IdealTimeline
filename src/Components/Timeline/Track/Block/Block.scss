@@ -26,4 +26,8 @@
       background-color: red;
     }
   }
+
+  &.selected {
+    background-color: yellowgreen;
+  }
 }
