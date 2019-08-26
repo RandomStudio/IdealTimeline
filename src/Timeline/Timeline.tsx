@@ -7,6 +7,7 @@ import { CursorType, IBlock } from './Track/Block/Block';
 //@ts-ignore
 import KeyHandler, { KEYPRESS } from 'react-key-handler';
 import UnitMarkers from './Ruler/Ruler';
+import Defaults from '../Defaults';
 
 export interface ITimeline {
   tracks: ITrack[],
@@ -79,8 +80,6 @@ const getLastBlockInTracks = (tracks: ITrack[]): IBlock | null => {
   }, lastBlock)
   return lastBlock;
 }
-
-const RULER_HEIGHT = 64;
 
 class Timeline extends React.Component<ITimelineProps, ITimelineState> {
 
@@ -214,7 +213,7 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
     const trackMax = lastBlock ? (lastBlock.start + lastBlock.duration) * 2: 0;
 
     const style = {
-      height: this.state.tracks.length * this.props.scale.y + RULER_HEIGHT*2,
+      height: this.state.tracks.length * this.props.scale.y + Defaults.rulerHeight *2,
       width: this.props.width,
       cursor: this.state.cursorStyle
     }
@@ -278,7 +277,7 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
           <UnitMarkers 
             scale={this.props.scale}
             width={trackMax * this.props.scale.x}
-            height={RULER_HEIGHT}
+            height={Defaults.rulerHeight}
             offset={offset}
             parentWidth={this.props.width}
             setPlayhead={this.setPlayhead}

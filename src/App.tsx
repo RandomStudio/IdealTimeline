@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.scss';
 import Timeline, { ITimeline, IVector2 } from './Timeline/Timeline';
+import Defaults from './Defaults';
 
 
 const dummy = {
@@ -55,7 +56,7 @@ class App extends React.Component<any, IAppState> {
 
   state = {
     timeline: dummy,
-    scale: { x: 100.0, y: 64.0 },
+    scale: Defaults.scale,
     playing: false,  
     currentPosition: 0, 
     targetPosition: null
