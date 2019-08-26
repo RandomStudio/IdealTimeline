@@ -37,7 +37,8 @@ interface ITimelineProps extends ITimeline {
   width: number,
   height: number
   scale: IVector2,
-  reportPlaybackState: (timelineState: ITimelinePlayback) => void
+  reportPlaybackState: (timelineState: ITimelinePlayback) => void,
+  reportSelection: (selectedBlocks: IBlock[]) => void
 }  
 
 interface IActiveBlock extends IBlock {
@@ -252,7 +253,9 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
     console.log('select block', trackId, blockId);
     const block = getMatchingBlock(this.state.tracks, trackId, blockId);
     if (block !== null) {
-      this.setState({ selectedBlocks: [block] });
+      this.setState({ selectedBlocks: [block] }, () => {
+        this.props.reportSelection(this.state.selectedBlocks);
+      });
     }
   }
 
