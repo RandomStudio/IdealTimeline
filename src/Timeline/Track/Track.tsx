@@ -9,6 +9,7 @@ export interface ITrack {
   }
   
   export interface ITrackProps extends ITrack, IBlockFunctions {
+    width: number;
     height: number;
     scale: { x: number, y: number };
     offset: { x: number, y: number };
@@ -18,12 +19,13 @@ export interface ITrack {
 const Track: React.FC<ITrackProps> = (props) => {
 
   const style = {
+    width: props.width,
     height: props.height,
-    top: props.height * props.id
+    // top: props.height * props.id
   }
 
   return (
-    <div className="track" style={style}>
+    <div className="Track" style={style}>
       <div className="name">
         {props.name}
       </div>

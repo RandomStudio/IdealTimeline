@@ -37,7 +37,7 @@ const dummy = {
           id: 1,
           name: "Four",
           start: 3.5,
-          duration: 4
+          duration: 20
         }
       ]
     }    

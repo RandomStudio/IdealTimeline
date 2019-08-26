@@ -1,4 +1,8 @@
 .Timeline {
   position: relative;
 
+  .contents {
+    position: relative;
+    overflow: scroll;
+  }
 }

@@ -80,6 +80,8 @@ const getLastBlockInTracks = (tracks: ITrack[]): IBlock | null => {
   return lastBlock;
 }
 
+const RULER_HEIGHT = 64;
+
 class Timeline extends React.Component<ITimelineProps, ITimelineState> {
 
   private ref: React.RefObject<HTMLDivElement> = React.createRef();
@@ -207,8 +209,12 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
       ? { x: 0, y: 0 }
       : { x: rect.left, y: rect.top };
 
-    const tracksStyle = {
-      height: this.state.tracks.length * this.state.scale.y
+    const lastBlock = getLastBlockInTracks(tracks);
+    const trackMax = lastBlock ? lastBlock.start + lastBlock.duration : 0;
+
+    const contentsStyle = {
+      height: this.state.tracks.length * this.state.scale.y + RULER_HEIGHT*2,
+      width: this.props.width
     }
 
     const style = {
@@ -239,46 +245,51 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
           }}
         />
 
-  
-        <div className="tracks" style={tracksStyle}>
-          {tracks.map(track => 
-            <Track 
-              {...track}
-              key={track.id}
-              height={this.state.scale.y}
+        <div className="contents" style={contentsStyle}>
+
+            {tracks.map(track => 
+              <Track 
+                {...track}
+                key={track.id}
+                height={this.state.scale.y}
+                width={this.state.scale.x * trackMax - offset.x}
+                scale={this.state.scale}
+                trackTitleWidth={0}
+                moveBlock={this.moveBlock}
+                moveTargetPosition={this.moveTargetPosition}
+                trimBlock={this.trimBlock}
+                changeCursor={this.changeCursor}
+                offset={offset}
+              />
+            )}
+
+          {this.state.targetPosition &&
+          <Playhead 
+              position={this.state.targetPosition}
+              type={PlayheadType.Target}
+              height={this.state.tracks.length * this.state.scale.y}
               scale={this.state.scale}
-              trackTitleWidth={0}
-              moveBlock={this.moveBlock}
-              moveTargetPosition={this.moveTargetPosition}
-              trimBlock={this.trimBlock}
-              changeCursor={this.changeCursor}
-              offset={offset}
-            />
-          )}
+          />
+          }
+          
+          <Playhead
+            position={this.state.currentPosition}
+            type={PlayheadType.Current}
+            height={this.state.tracks.length * this.state.scale.y}
+            scale={this.state.scale}
+          />
+
+          <UnitMarkers 
+            scale={this.state.scale}
+            width={trackMax * this.state.scale.x}
+            height={RULER_HEIGHT}
+            offset={offset}
+            parentWidth={this.props.width}
+            setPlayhead={this.setPlayhead}
+          />
+          
         </div>
-
-      {this.state.targetPosition &&
-       <Playhead 
-          position={this.state.targetPosition}
-          type={PlayheadType.Target}
-          height={this.state.tracks.length * this.state.scale.y}
-          scale={this.state.scale}
-       />
-      }
-      
-      <Playhead
-        position={this.state.currentPosition}
-        type={PlayheadType.Current}
-        height={this.state.tracks.length * this.state.scale.y}
-        scale={this.state.scale}
-      />
-
-      <UnitMarkers 
-        scale={this.state.scale}
-        offset={offset}
-        parentWidth={this.props.width}
-        setPlayhead={this.setPlayhead}
-      />
+  
 
         <div className="controls">
           <button onClick={(e) => { this.handleZoom({ x: -4, y: 0 }) }}>
