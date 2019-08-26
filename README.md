@@ -27,7 +27,7 @@ Hierarchy of elements:
 - [x] Blocks should be resizable
 - [ ] Blocks should be able to insert (shift later blocks)
 - [ ] Blocks should be movable between layers
-- [ ] Timeline should be zoomable
+- [x] Timeline should be zoomable
 - [x] Timeline should be playable, i.e. a playhead starts moving
 - [x] Timeline should be movable by mouse click
 - [ ] Timeline should update a POJO
