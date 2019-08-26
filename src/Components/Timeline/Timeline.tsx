@@ -132,26 +132,31 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
     }
   }
 
-  moveBlock = (trackId: number, blockId: number, newStart: number) => {
+  moveBlock = (srcTrackId: number, blockId: string, newStart: number, dstTrackId: number) => {
     // console.log(`moveBlock ${trackId}/${blockId} to x: ${newStart}`);
-    const tracks = this.state.tracks.map(track => track.id === trackId
-      ? { 
-        ...track, 
-        blocks: track.blocks.map(block => block.id === blockId
-          ? {
-            ...block,
-            start: newStart
-          }
-          : block
-        )
-      }
-      : track
-    );
-    // console.log('updated tracks:', tracks);
-    this.setState({ tracks });
+
+    if (srcTrackId === dstTrackId) {
+      const tracks = this.state.tracks.map(track => track.id === dstTrackId
+        ? { 
+          ...track, 
+          blocks: track.blocks.map(block => block.id === blockId
+            ? {
+              ...block,
+              start: newStart
+            }
+            : block
+          )
+        }
+        : track
+      );
+      // console.log('updated tracks:', tracks);
+      this.setState({ tracks });
+    } else {
+      console.warn('need to handle this better')
+    }
   }
 
-  trimBlock = (trackId: number, blockId: number, startDelta: number, durationDelta: number) => {
+  trimBlock = (trackId: number, blockId: string, startDelta: number, durationDelta: number) => {
     console.log(`trimBlock ${trackId}/${blockId}: startDelta: ${startDelta}, durationDelta: ${durationDelta}`);
     const tracks = this.state.tracks.map(track => track.id === trackId
         ? { 

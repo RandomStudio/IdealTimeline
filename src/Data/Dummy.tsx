@@ -7,13 +7,13 @@ export const dummy1 = {
       name: "T1",
       blocks: [
         {
-          id: 0,
+          id: 't1-one',
           name: "One",
           start: 0,
           duration: 1
         },
         {
-          id: 1,
+          id: 't1-two',
           name: "Two",
           start: 2,
           duration: 2
@@ -25,13 +25,13 @@ export const dummy1 = {
       name: "T2",
       blocks: [
         {
-          id: 0,
+          id: 't2-one',
           name: "Three",
           start: 0.5,
           duration: 3
         },
         {
-          id: 1,
+          id: 't2-two',
           name: "Four",
           start: 3.5,
           duration: 5

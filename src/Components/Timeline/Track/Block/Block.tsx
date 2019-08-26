@@ -3,7 +3,7 @@ import './Block.scss';
 import { IVector2 } from '../../Timeline';
 
 export interface IBlock {
-  id: number,
+  id: string,
   name: string,
   start: number,
   duration: number,
@@ -17,9 +17,9 @@ export enum CursorType {
 }
 
 export interface IBlockFunctions {
-  moveBlock: (trackId: number, blockId: number, newStart: number) => void,
+  moveBlock: (trackId: number, blockId: string, newStart: number, targetTrack: number) => void,
   moveTargetPosition: (newPosition: number | null) => void,
-  trimBlock: (trackId: number, blockId: number, startDelta: number, durationDelta: number) => void,
+  trimBlock: (trackId: number, blockId: string, startDelta: number, durationDelta: number) => void,
   changeCursor: (style: CursorType) => void,
 }
 
@@ -47,16 +47,6 @@ class Block extends React.Component<IBlockProps> {
     dragging: false,
     dragStartOffset: 0
   }
-  
-
-  constrainDrag = (pos: { x: number, y: number }) => {
-    return ({
-      x: pos.x >= 0 ? pos.x : 0,
-      y: this.props.height * this.props.trackId
-    });
-  }
-
-
 
   offsetInBlock = (mouseX: number): number => {
     if (this.ref && this.ref.current) {
@@ -115,8 +105,9 @@ class Block extends React.Component<IBlockProps> {
             this.props.moveTargetPosition(absoluteToTimelinePosition(x, this.props.offset.x, this.state.dragStartOffset, this.props.scale.x));
           }}
           onDragEnd={(e: React.DragEvent) => {
-            const x = absoluteToTimelinePosition(e.clientX, this.props.offset.x, this.state.dragStartOffset, this.props.scale.x)
-            this.props.moveBlock(this.props.trackId, this.props.id, x);
+            const x = absoluteToTimelinePosition(e.clientX, this.props.offset.x, this.state.dragStartOffset, this.props.scale.x);
+            const targetTrack = Math.floor((e.clientY - this.props.offset.y) / this.props.height);
+            this.props.moveBlock(this.props.trackId, this.props.id, x, targetTrack);
             this.props.changeCursor(CursorType.move);
           }}
           onMouseEnter={() => this.props.changeCursor(CursorType.move)}
