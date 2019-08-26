@@ -36,17 +36,15 @@ interface IBlockWithTrack extends IBlock {
 const getCurrentBlocksUnderPlayhead = (currentPosition: number, tracks: ITrack[]): IBlockWithTrack[] => 
   tracks.reduce( (acc, current) => {
     const activeBlock = current.blocks.find(b => currentPosition >= b.start && currentPosition <= (b.start +  b.duration))
-    if (activeBlock !== undefined) {
-      return [
+      return (activeBlock !== undefined) ?
+      [
         ...acc, 
         {
           ...activeBlock,
           trackId: current.id
         }
       ]
-    } else {
-      return acc;
-    }
+      : acc
   }
   , [] as IBlockWithTrack[]);
 
