@@ -32,7 +32,7 @@ Hierarchy of elements:
 - [x] Timeline should be zoomable
 - [x] Timeline should be playable, i.e. a playhead starts moving
 - [x] Timeline should be movable by mouse click
-- [ ] Timeline should update a POJO
+- [x] Timeline should update a POJO for active blocks under playhead
 - [ ] Timeline should emit events over a standardised websocket protocol
 - [ ] Timelines should be nestable
 
