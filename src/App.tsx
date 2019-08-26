@@ -62,10 +62,14 @@ class App extends React.Component<any, IAppState> {
     targetPosition: null
   } as IAppState
 
-  handleZoom = (delta: { x: number, y: number }) => {
-    const { scale } = this.state;
-    scale.x = scale.x + delta.x;
-    scale.y = scale.y + delta.y;
+  handleZoom = (newScale: { x: number, y: number }, absolute: boolean = false) => {
+    let { scale } = this.state;
+    scale = absolute === true
+      ? newScale
+      : {
+        x: scale.x + newScale.x,
+        y: scale.y + newScale.y
+      }
     this.setState({ scale });
   }
 
@@ -90,6 +94,9 @@ class App extends React.Component<any, IAppState> {
           </button>
           <button onClick={(e) => { this.handleZoom({ x: 4, y: 0 }) }}>
             zoom +
+          </button>
+          <button onClick={(e) => { this.handleZoom(Defaults.scale, true) }}>
+            reset
           </button>
         </div>
           
