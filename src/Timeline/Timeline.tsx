@@ -146,7 +146,7 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
       const before = prevState.playing;
       const after = !prevState.playing;
       console.log('PLAYING: was', before, 'now', after);
-      return { ...prevState, playing: after, timer: null, lastTime: null };
+      return { ...prevState, playing: after, lastTime: null };
     });
   }
 
