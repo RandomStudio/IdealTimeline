@@ -186,7 +186,7 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
   }
 
   trimBlock = (trackId: number, blockId: string, startDelta: number, durationDelta: number) => {
-    console.log(`trimBlock ${trackId}/${blockId}: startDelta: ${startDelta}, durationDelta: ${durationDelta}`);
+    // console.log(`trimBlock ${trackId}/${blockId}: startDelta: ${startDelta}, durationDelta: ${durationDelta}`);
     const tracks = this.state.tracks.map(track => track.id === trackId
         ? { 
           ...track, 
