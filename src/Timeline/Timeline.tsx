@@ -198,9 +198,17 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
     const rect = (this.ref && this.ref.current) 
       ? this.ref.current.getBoundingClientRect() 
       : null;
-    const offset = rect === null 
-      ? { x: 0, y: 0 }
-      : { x: rect.left, y: rect.top };
+
+    const scroll = (this.ref && this.ref.current)
+      ? { 
+        left: this.ref.current.scrollLeft,
+        top: this.ref.current.scrollTop
+      } :
+      null;
+
+    const offset = (rect !== null && scroll !== null)
+      ? { x: rect.left - scroll.left, y: rect.top }
+      : { x: 0, y: 0 }
 
     const lastBlock = getLastBlockInTracks(tracks);
     const trackMax = lastBlock ? (lastBlock.start + lastBlock.duration) * 2: 0;
