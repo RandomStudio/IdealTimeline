@@ -102,7 +102,6 @@ class Block extends React.Component<IBlockProps> {
         ref={this.ref}
         className="Block"
         style={containerStyle}
-        
       >
         <div className="movable"
           style={style}
