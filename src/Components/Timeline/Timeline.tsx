@@ -7,7 +7,7 @@ import { CursorType, IBlock } from './Track/Block/Block';
 //@ts-ignore
 import KeyHandler, { KEYPRESS } from 'react-key-handler';
 import UnitMarkers from './Ruler/Ruler';
-import Defaults from '../Data/Defaults';
+import Defaults from '../../Data/Defaults';
 
 export interface ITimeline {
   tracks: ITrack[],

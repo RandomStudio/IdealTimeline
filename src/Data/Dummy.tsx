@@ -1,4 +1,4 @@
-import { ITimeline } from "../Timeline/Timeline";
+import { ITimeline } from "../Components/Timeline/Timeline";
 
 export const dummy1 = {
   tracks: [

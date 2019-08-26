@@ -1,8 +1,8 @@
 import React from 'react';
 import './App.scss';
 import Timeline, { ITimeline, IVector2, ITimelinePlayback } from './Timeline/Timeline';
-import Defaults from './Data/Defaults';
-import * as Dummy from './Data/Dummy';
+import Defaults from '../Data/Defaults';
+import * as Dummy from '../Data/Dummy';
 
 interface IAppState {
   timeline: ITimeline,

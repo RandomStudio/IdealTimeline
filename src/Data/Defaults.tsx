@@ -1,4 +1,4 @@
-import { IVector2 } from "../Timeline/Timeline";
+import { IVector2 } from "../Components/Timeline/Timeline";
 
 export interface ISettings {
   rulerHeight: number,
