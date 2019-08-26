@@ -12,13 +12,17 @@ export interface ITimeline {
   tracks: ITrack[],
 }
 
+export interface IScale {
+  x: number, y: number
+}
+
 export interface ITimelineState {
   currentPosition: number,
   targetPosition: number | null,
   playing: boolean,
   lastTime: number | null,
   tracks: ITrack[],
-  scale: { x: number, y: number },
+  scale: IScale,
   trackTitleWidth: number,
   cursorStyle: CursorType,
   currentUnderPlayhead: IActiveBlock[]
@@ -234,6 +238,11 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
         type={PlayheadType.Current}
         height={this.state.tracks.length * this.state.scale.y}
         scale={this.state.scale}
+      />
+
+      <UnitMarkers 
+        scale={this.state.scale}
+        parentWidth={this.props.width}
       />
 
         <div className="controls">

@@ -1,41 +1,30 @@
 import React from 'react';
-import { Group, Text, Line } from 'react-konva';
+import './UnitMarkers.scss';
+
+import { IScale} from '../Timeline';
 
 interface IUnitMarkersProps {
-  distance: number,
+  scale: IScale,
   parentWidth: number
-  parentHeight: number
 }
 
 const UnitMarkers: React.FC<IUnitMarkersProps> = (props) => {
-  const numMarkers = Math.floor(props.parentWidth / props.distance);
-  const markers = Array(numMarkers).fill(null).map((m, index) => {
-    const x = props.distance * index;
-    const height = props.parentHeight;
-    const color = "#dddddd"
+  const numMarkers = Math.floor(props.parentWidth / props.scale.x);
+  const markers = Array(numMarkers).fill(null).map( (m, index) => {
+    const style = {
+      left: index * props.scale.x
+    }
     return (
-      <Group>
-        <Line 
-          points={[ x, 0, x, height]}
-          stroke={color}
-        />
-        <Text
-          text={String(index)}
-          x={x+ 5}
-          y={height - 10}
-          fill={color}
-        />
-      </Group>
+      <div className="marker" style={style}>
+        {index}
+      </div>
 
-    )
-  }
-  );
+    );
+  });
 
-  return (
-    <Group>
-      {markers}
-    </Group>
-  )
+  return <div className="UnitMarkers">
+    {markers}
+  </div>
 }
 
 export default UnitMarkers;

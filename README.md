@@ -27,12 +27,13 @@ Hierarchy of elements:
 - [x] Layers provide concurrent blocks to be arranged
 - [x] Blocks should be movable (update start position)
 - [x] Blocks should be resizable
-- [ ] Blocks should be able to insert (shift later blocks)
-- [ ] Blocks should be movable between layers
 - [x] Timeline should be zoomable
 - [x] Timeline should be playable, i.e. a playhead starts moving
 - [x] Timeline should be movable by mouse click
 - [x] Timeline should update a POJO for active blocks under playhead
+- [ ] Timeline should be (horizontally) scrollable
+- [ ] Blocks should be able to insert (shift later blocks)
+- [ ] Blocks should be movable between layers
 - [ ] Timeline should emit events over a standardised websocket protocol
 - [ ] Timelines should be nestable
 
