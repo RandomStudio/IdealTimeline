@@ -213,7 +213,7 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
     const trackMax = lastBlock ? lastBlock.start + lastBlock.duration : 0;
 
     const contentsStyle = {
-      height: this.state.tracks.length * this.state.scale.y + RULER_HEIGHT*2,
+      height: this.state.tracks.length * this.state.scale.y + RULER_HEIGHT*2 ,
       width: this.props.width
     }
 
