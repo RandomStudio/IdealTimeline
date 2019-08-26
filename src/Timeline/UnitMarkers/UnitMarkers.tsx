@@ -26,9 +26,12 @@ const UnitMarkers: React.FC<IUnitMarkersProps> = (props) => {
   });
 
   return (
-    <div className="UnitMarkers" onClick={(e) => 
-      props.setPlayhead(absoluteToTimelinePosition(e.clientX, props.offset.x, 0, props.scale.x))
-    }>
+    <div 
+      className="UnitMarkers" 
+      onClick={(e) => 
+        props.setPlayhead(absoluteToTimelinePosition(e.clientX, props.offset.x, 0, props.scale.x))
+      }
+    >
       {markers}
     </div>
   )
