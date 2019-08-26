@@ -33,19 +33,23 @@ interface IBlockWithTrack extends IBlock {
   trackId: number
 }
 
-const getCurrentBlocksUnderPlayhead = (currentPosition: number, tracks: ITrack[]): IBlockWithTrack[] => {
-  let blocksWithTracks: IBlockWithTrack[] = [];
-  tracks.forEach(track => {
-    const activeBlock = track.blocks.find(b =>  
-      currentPosition >= b.start && currentPosition <= (b.start +  b.duration));
+const getCurrentBlocksUnderPlayhead = (currentPosition: number, tracks: ITrack[]): IBlockWithTrack[] => 
+  tracks.reduce( (acc, current) => {
+    const activeBlock = current.blocks.find(b => currentPosition >= b.start && currentPosition <= (b.start +  b.duration))
     if (activeBlock !== undefined) {
-      const blockWithTracks = { ...activeBlock, trackId: track.id };
-      blocksWithTracks.push(blockWithTracks);
+      return [
+        ...acc, 
+        {
+          ...activeBlock,
+          trackId: current.id
+        }
+      ]
+    } else {
+      return acc;
     }
-  });
-  return blocksWithTracks;
-}
-  
+  }
+  , [] as IBlockWithTrack[]);
+
 
 class Timeline extends React.Component<ITimelineProps, ITimelineState> {
 
