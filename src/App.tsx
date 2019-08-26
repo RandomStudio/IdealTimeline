@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.scss';
-import Timeline, { ITimeline, IVector2 } from './Timeline/Timeline';
+import Timeline, { ITimeline, IVector2, ITimelinePlayback } from './Timeline/Timeline';
 import Defaults from './Defaults';
 
 
@@ -47,7 +47,8 @@ const dummy = {
 
 interface IAppState {
   timeline: ITimeline,
-  scale: IVector2
+  scale: IVector2,
+  playbackState: ITimelinePlayback
 }
 
 
@@ -56,10 +57,7 @@ class App extends React.Component<any, IAppState> {
 
   state = {
     timeline: dummy,
-    scale: Defaults.scale,
-    playing: false,  
-    currentPosition: 0, 
-    targetPosition: null
+    scale: Defaults.scale
   } as IAppState
 
   handleZoom = (newScale: { x: number, y: number }, absolute: boolean = false) => {
@@ -86,19 +84,40 @@ class App extends React.Component<any, IAppState> {
             width={window.innerWidth}
             height={window.innerHeight/2}
             scale={this.state.scale}
+            reportPlaybackState={(timelineState: ITimelinePlayback) => this.setState({ playbackState: timelineState })}
           />
 
-       <div className="controls">
-          <button onClick={(e) => { this.handleZoom({ x: -4, y: 0 }) }}>
-            zoom -
-          </button>
-          <button onClick={(e) => { this.handleZoom({ x: 4, y: 0 }) }}>
-            zoom +
-          </button>
-          <button onClick={(e) => { this.handleZoom(Defaults.scale, true) }}>
-            reset
-          </button>
-        </div>
+          <div className="clock">
+            {this.state.playbackState && 
+              <code>
+                POSITION: {this.state.playbackState.currentPosition.toFixed(2)}
+                {' '}
+                TRANSPORT: {this.state.playbackState.playing ? 'playing': 'paused'}
+              </code>
+            }
+          </div>
+
+          <div className="controls">
+              <button onClick={(e) => { this.handleZoom({ x: -4, y: 0 }) }}>
+              zoom -
+            </button>
+            <button onClick={(e) => { this.handleZoom({ x: 4, y: 0 }) }}>
+              zoom +
+            </button>
+            <button onClick={(e) => { this.handleZoom(Defaults.scale, true) }}>
+              reset
+            </button>
+          </div>
+
+          {this.state.playbackState &&
+            <div className="debug">
+              <ol>
+              {this.state.playbackState.currentUnderPlayhead.map(block => 
+                <li><code>{JSON.stringify(block)}</code></li>                
+              )}
+              </ol>
+            </div>
+          }
           
         </main>
 

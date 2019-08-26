@@ -20,10 +20,9 @@ const Playhead: React.FC<IPlayheadProps> = (props) => {
   const style = {
     left: timelineToAbsolute(props.position, props.scale.x),
     height: props.height,
-    backgroundColor: props.type === PlayheadType.Current ? 'green' : 'grey'
   }
   return (
-    <div className="Playhead" style={style} />
+    <div className={`Playhead ${props.type === PlayheadType.Current ? 'current' : `target`}`} style={style} />
   )
 }
 

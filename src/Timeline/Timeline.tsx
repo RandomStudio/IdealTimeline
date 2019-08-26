@@ -17,21 +17,25 @@ export interface IVector2 {
   x: number, y: number
 }
 
-export interface ITimelineState {
+export interface ITimelinePlayback {
   currentPosition: number,
-  targetPosition: number | null,
   playing: boolean,
+  currentUnderPlayhead: IActiveBlock[]
+}
+
+export interface ITimelineState extends ITimelinePlayback {
+  targetPosition: number | null,
   lastTime: number | null,
   tracks: ITrack[],
   trackTitleWidth: number,
   cursorStyle: CursorType,
-  currentUnderPlayhead: IActiveBlock[]
 }
 
 interface ITimelineProps extends ITimeline {
   width: number,
   height: number
   scale: IVector2,
+  reportPlaybackState: (timelineState: ITimelinePlayback) => void
 }  
 
 interface IActiveBlock extends IBlock {
@@ -110,6 +114,7 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
       const delta = now - this.state.lastTime;
       // console.log('now', now, 'delta', delta);
       if (delta > 1000/60) {
+        this.props.reportPlaybackState(this.state);
         // console.log('tick', delta);
         if (this.state.playing) {
           const newPosition = Math.fround(this.state.currentPosition + delta/1000);
@@ -262,7 +267,7 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
           <Playhead 
               position={this.state.targetPosition}
               type={PlayheadType.Target}
-              height={this.state.tracks.length * this.props.scale.y}
+              height={this.state.tracks.length * this.props.scale.y + Defaults.rulerHeight}
               scale={this.props.scale}
           />
           }
@@ -270,7 +275,7 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
           <Playhead
             position={this.state.currentPosition}
             type={PlayheadType.Current}
-            height={this.state.tracks.length * this.props.scale.y}
+            height={this.state.tracks.length * this.props.scale.y + Defaults.rulerHeight}
             scale={this.props.scale}
           />
 

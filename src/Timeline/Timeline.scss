@@ -1,11 +1,13 @@
 .Timeline {
   position: relative;
   overflow: scroll;
+  background: #666;
 
   .name {
     position: fixed;
     z-index: 2;
     opacity: 0.5;
+    left: 0;
   }
 
 }

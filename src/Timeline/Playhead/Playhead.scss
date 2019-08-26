@@ -1,6 +1,15 @@
 .Playhead {
   position: absolute;
   top: 0;
-  width: 2px;
+  width: 1px;
   z-index: 2;
+
+  &.current {
+    background-color: yellow;
+  }
+
+  &.target {
+    background-color: rgb(78, 61, 28);
+    width: 2px;
+  }
 }
