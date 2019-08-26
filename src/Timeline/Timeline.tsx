@@ -6,7 +6,7 @@ import Playhead, { PlayheadType } from './Playhead/Playhead';
 import { CursorType, IBlock } from './Track/Block/Block';
 //@ts-ignore
 import KeyHandler, { KEYPRESS } from 'react-key-handler';
-import UnitMarkers from './UnitMarkers/UnitMarkers';
+import UnitMarkers from './Ruler/Ruler';
 
 export interface ITimeline {
   tracks: ITrack[],
@@ -210,7 +210,7 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
       : { x: rect.left, y: rect.top };
 
     const lastBlock = getLastBlockInTracks(tracks);
-    const trackMax = lastBlock ? lastBlock.start + lastBlock.duration : 0;
+    const trackMax = lastBlock ? (lastBlock.start + lastBlock.duration) * 2: 0;
 
     const contentsStyle = {
       height: this.state.tracks.length * this.state.scale.y + RULER_HEIGHT*2 ,

@@ -1,5 +1,5 @@
 import React from 'react';
-import './UnitMarkers.scss';
+import './Ruler.scss';
 
 import { IVector2} from '../Timeline';
 import { absoluteToTimelinePosition } from '../Track/Block/Block';
@@ -36,9 +36,10 @@ const UnitMarkers: React.FC<IUnitMarkersProps> = (props) => {
     <div 
       className="UnitMarkers" 
       style={rulerStyle}
-      onClick={(e) => 
+      onClick={(e) => {
+        console.log(e.currentTarget.scrollLeft);
         props.setPlayhead(absoluteToTimelinePosition(e.clientX, props.offset.x, 0, props.scale.x))
-      }
+      }}
     >
       {markers}
     </div>
