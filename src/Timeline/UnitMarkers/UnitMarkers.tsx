@@ -12,7 +12,7 @@ interface IUnitMarkersProps {
 }
 
 const UnitMarkers: React.FC<IUnitMarkersProps> = (props) => {
-  const numMarkers = Math.floor(props.parentWidth / props.scale.x) - 1;
+  const numMarkers = Math.floor((props.parentWidth - props.offset.x) / props.scale.x);
   const markers = Array(numMarkers).fill(null).map( (m, index) => {
     const style = {
       left: index * props.scale.x
