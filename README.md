@@ -33,7 +33,7 @@ Hierarchy of elements:
 - [x] Timeline should be playable, i.e. a playhead starts moving
 - [x] Timeline should be movable by mouse click
 - [x] Timeline should update a POJO for active blocks under playhead
-- [ ] Timeline should be (horizontally) scrollable
+- [x] Timeline should be (horizontally) scrollable
 - [ ] Timeline should emit events over a standardised websocket protocol
 
 ### Advanced block editing
