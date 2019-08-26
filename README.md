@@ -25,28 +25,13 @@ Hierarchy of elements:
 
 ## Features Roadmap
 
-### Basic timeline with blocks
-- [x] Layers provide concurrent blocks to be arranged
-- [x] Blocks should be movable (update start position)
-- [x] Blocks should be resizable
-- [x] Timeline should be zoomable
-- [x] Timeline should be playable, i.e. a playhead starts moving
-- [x] Timeline should be movable by mouse click
-- [x] Timeline should update a POJO for active blocks under playhead
-- [x] Timeline should be (horizontally) scrollable
-- [ ] Timeline should emit events over a standardised websocket protocol
+Basic functionality is mostly done, but there's a lot of work to be done in adding:
 
-### Advanced block editing
-- [ ] Blocks should be able to insert (shift later blocks)
-- [ ] Blocks should be movable between layers
+* Keyframe visualisation and editing
+* Nested timelines
+* Advanced editing features (insert, etc.)
 
-### Keyframes
-- [ ] It should be possible to add/remove keyframe layers in a block
-- [ ] It should be possible to add/remove keyframes in keyframe layers
-
-### Advanced nestable timelines
-- [ ] Timelines should be nestable
-
+See the full scope of work in progress (and jump in!) at https://github.com/RandomStudio/IdealTimeline/projects
 
 ## Installing, running, deploying
 
