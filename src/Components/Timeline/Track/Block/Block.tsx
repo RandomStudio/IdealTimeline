@@ -21,6 +21,7 @@ export interface IBlockFunctions {
   moveTargetPosition: (newPosition: number | null) => void,
   trimBlock: (trackId: number, blockId: string, startDelta: number, durationDelta: number) => void,
   changeCursor: (style: CursorType) => void,
+  selectBlock: (trackId: number, blockId: string) => void
 }
 
 export interface IBlockProps extends IBlock, IBlockFunctions {
@@ -96,6 +97,7 @@ class Block extends React.Component<IBlockProps> {
         <div className="movable"
           style={style}
           draggable={true}
+          onClick={(e: React.MouseEvent) => { this.props.selectBlock(this.props.trackId, this.props.id) }}
           onDragStart={(e: React.DragEvent) => {
             this.setState({ dragStartOffset: this.offsetInBlock(e.clientX) });
           }}

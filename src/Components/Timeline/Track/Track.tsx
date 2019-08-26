@@ -44,6 +44,7 @@ const Track: React.FC<ITrackProps> = (props) => {
             trimBlock={props.trimBlock}
             moveTargetPosition={props.moveTargetPosition}
             changeCursor={props.changeCursor}
+            selectBlock={props.selectBlock}
             offset={props.offset}
           />
         )}

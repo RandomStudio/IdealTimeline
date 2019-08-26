@@ -30,6 +30,7 @@ export interface ITimelineState extends ITimelinePlayback {
   tracks: ITrack[],
   trackTitleWidth: number,
   cursorStyle: CursorType,
+  selectedBlock: IBlock | null
 }
 
 interface ITimelineProps extends ITimeline {
@@ -98,6 +99,7 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
     tracks: [],
     trackTitleWidth: 0,
     cursorStyle: CursorType.default,
+    selectedBlock: null,
     currentUnderPlayhead: []
   } as ITimelineState;
 
@@ -232,6 +234,9 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
     this.setState({ cursorStyle: style });
   }
 
+  selectBlock = (trackId: number, blockId: string) => {
+    console.log('select block', trackId, blockId);
+  }
 
 
   render = () => {
@@ -296,6 +301,7 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
                 moveTargetPosition={this.moveTargetPosition}
                 trimBlock={this.trimBlock}
                 changeCursor={this.changeCursor}
+                selectBlock={this.selectBlock}
                 offset={offset}
               />
             )}
