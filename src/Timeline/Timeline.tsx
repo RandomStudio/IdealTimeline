@@ -61,14 +61,12 @@ const getLastBlock = (blocks: IBlock[]): IBlock =>
     (block.start + block.duration) > result.start + result.duration
       ? block
       : result
-  , blocks[0]);
+  );
 
 const getLastBlockInTracks = (tracks: ITrack[]): IBlock | null => {
   let lastBlock: IBlock | null = null;
   tracks.forEach( (track) => {
-    if (track.blocks.length === 0) {
-      return null;
-    } else {
+    if (track.blocks.length > 0) {
       const lastBlockInTrack = getLastBlock(track.blocks);
       if (lastBlock === null) {
         lastBlock = lastBlockInTrack;
