@@ -1,4 +1,5 @@
 import React from 'react';
+import { v4 } from 'uuid';
 
 import './Timeline.scss';
 import Track, { ITrack } from './Track/Track';
@@ -152,7 +153,8 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
       // console.log('updated tracks:', tracks);
       this.setState({ tracks });
     } else {
-      console.warn('need to handle this better')
+
+      console.warn('need to handle this better', v4());
     }
   }
 
