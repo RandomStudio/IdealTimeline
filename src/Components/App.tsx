@@ -71,8 +71,8 @@ class App extends React.Component<any, IAppState> {
           {this.state.playbackState &&
             <div className="debug">
               <ol>
-              {this.state.playbackState.currentUnderPlayhead.map(block => 
-                <li key={block.id}><code>{JSON.stringify(block)}</code></li>                
+              {this.state.playbackState.currentUnderPlayhead.map( (block, index) => 
+                <li key={index}><code>{JSON.stringify(block)}</code></li>                
               )}
               </ol>
             </div>
