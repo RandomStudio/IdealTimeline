@@ -91,6 +91,10 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
             currentPosition: newPosition,
             currentUnderPlayhead: getCurrentBlocksUnderPlayhead(newPosition, this.state.tracks)
           });
+        } else {
+          this.setState({
+            currentUnderPlayhead: getCurrentBlocksUnderPlayhead(this.state.currentPosition, this.state.tracks)
+          });
         }
       }
     }
