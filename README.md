@@ -35,6 +35,8 @@ Hierarchy of elements:
 - [ ] Blocks should be able to insert (shift later blocks)
 - [ ] Blocks should be movable between layers
 - [ ] Timeline should emit events over a standardised websocket protocol
+- [ ] It should be possible to add/remove keyframe layers in a block
+- [ ] It should be possible to add/remove keyframes in keyframe layers
 - [ ] Timelines should be nestable
 
 

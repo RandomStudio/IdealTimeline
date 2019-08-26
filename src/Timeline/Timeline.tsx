@@ -56,6 +56,31 @@ const getCurrentBlocksUnderPlayhead = (currentPosition: number, tracks: ITrack[]
   }
   , [] as IActiveBlock[]);
 
+const getLastBlock = (blocks: IBlock[]): IBlock =>
+  blocks.reduce( (result, block) => 
+    (block.start + block.duration) > result.start + result.duration
+      ? block
+      : result
+  , blocks[0]);
+
+const getLastBlockInTracks = (tracks: ITrack[]): IBlock | null => {
+  let lastBlock: IBlock | null = null;
+  tracks.forEach( (track) => {
+    if (track.blocks.length === 0) {
+      return null;
+    } else {
+      const lastBlockInTrack = getLastBlock(track.blocks);
+      if (lastBlock === null) {
+        lastBlock = lastBlockInTrack;
+      } else {
+        if ((lastBlockInTrack.start + lastBlockInTrack.duration) > lastBlock.start + lastBlock.duration) {
+          lastBlock = lastBlockInTrack;
+        } 
+      }
+    }
+  }, lastBlock)
+  return lastBlock;
+}
 
 class Timeline extends React.Component<ITimelineProps, ITimelineState> {
 
@@ -205,6 +230,17 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
           code="Home"
           onKeyHandle={() => { this.setPlayhead(0)}}
         />
+        <KeyHandler
+          keyEventName={'keydown'}
+          code="End"
+          onKeyHandle={() => { 
+            const lastBlock = getLastBlockInTracks(this.state.tracks);
+            if (lastBlock) {
+              this.setPlayhead(lastBlock.start + lastBlock.duration);
+            }
+          }}
+        />
+
   
         <div className="tracks" style={tracksStyle}>
           {tracks.map(track => 
