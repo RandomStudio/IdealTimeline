@@ -1,10 +1,5 @@
-.track {
-
-  position: absolute;
-  width: 100%;
-
-  .name {
-    position: absolute;
-    color: yellow;
+.Track {
+  &:nth-child(even) {
+    background-color: rgba(0,0,0,0.2);
   }
 }

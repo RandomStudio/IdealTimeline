@@ -218,8 +218,8 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
     const trackMax = lastBlock ? (lastBlock.start + lastBlock.duration) * 2: 0;
 
     const style = {
-      height: this.state.tracks.length * this.props.scale.y + Defaults.rulerHeight *2,
-      width: this.props.width,
+      height: this.state.tracks.length * this.props.scale.y + Defaults.rulerHeight * 1.5,
+      width: rect !== null ? this.props.width - rect.left *2 : this.props.width,
       cursor: this.state.cursorStyle
     }
 
