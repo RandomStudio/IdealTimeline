@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.scss';
-import Timeline, { ITimeline } from './Timeline/Timeline';
+import Timeline, { ITimeline, IVector2 } from './Timeline/Timeline';
 
 
 const dummy = {
@@ -37,7 +37,7 @@ const dummy = {
           id: 1,
           name: "Four",
           start: 3.5,
-          duration: 20
+          duration: 5
         }
       ]
     }    
@@ -45,7 +45,8 @@ const dummy = {
 } as ITimeline;
 
 interface IAppState {
-  timeline: ITimeline 
+  timeline: ITimeline,
+  scale: IVector2
 }
 
 
@@ -54,11 +55,18 @@ class App extends React.Component<any, IAppState> {
 
   state = {
     timeline: dummy,
+    scale: { x: 100.0, y: 64.0 },
     playing: false,  
     currentPosition: 0, 
     targetPosition: null
   } as IAppState
 
+  handleZoom = (delta: { x: number, y: number }) => {
+    const { scale } = this.state;
+    scale.x = scale.x + delta.x;
+    scale.y = scale.y + delta.y;
+    this.setState({ scale });
+  }
 
   render = () => (
       <div className="App">
@@ -72,7 +80,18 @@ class App extends React.Component<any, IAppState> {
             {...this.state.timeline} 
             width={window.innerWidth}
             height={window.innerHeight/2}
+            scale={this.state.scale}
           />
+
+       <div className="controls">
+          <button onClick={(e) => { this.handleZoom({ x: -4, y: 0 }) }}>
+            zoom -
+          </button>
+          <button onClick={(e) => { this.handleZoom({ x: 4, y: 0 }) }}>
+            zoom +
+          </button>
+        </div>
+          
         </main>
 
       </div>

@@ -1,10 +1,10 @@
-.Track {
+.track {
 
-  position: relative;
+  position: absolute;
+  width: 100%;
 
   .name {
     position: absolute;
     color: yellow;
-    z-index: 10;
   }
 }

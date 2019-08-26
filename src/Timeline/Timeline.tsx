@@ -22,7 +22,6 @@ export interface ITimelineState {
   playing: boolean,
   lastTime: number | null,
   tracks: ITrack[],
-  scale: IVector2,
   trackTitleWidth: number,
   cursorStyle: CursorType,
   currentUnderPlayhead: IActiveBlock[]
@@ -31,6 +30,7 @@ export interface ITimelineState {
 interface ITimelineProps extends ITimeline {
   width: number,
   height: number
+  scale: IVector2,
 }  
 
 interface IActiveBlock extends IBlock {
@@ -92,7 +92,6 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
     playing: false,
     lastTime: null,
     tracks: [],
-    scale: { x: 100.0, y: 64.0 },
     trackTitleWidth: 0,
     cursorStyle: CursorType.default,
     currentUnderPlayhead: []
@@ -192,12 +191,6 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
     this.setState({ cursorStyle: style });
   }
 
-  handleZoom = (delta: { x: number, y: number }) => {
-    const { scale } = this.state;
-    scale.x = scale.x + delta.x;
-    scale.y = scale.y + delta.y;
-    this.setState({ scale });
-  }
 
 
   render = () => {
@@ -212,12 +205,9 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
     const lastBlock = getLastBlockInTracks(tracks);
     const trackMax = lastBlock ? (lastBlock.start + lastBlock.duration) * 2: 0;
 
-    const contentsStyle = {
-      height: this.state.tracks.length * this.state.scale.y + RULER_HEIGHT*2 ,
-      width: this.props.width
-    }
-
     const style = {
+      height: this.state.tracks.length * this.props.scale.y + RULER_HEIGHT*2,
+      width: this.props.width,
       cursor: this.state.cursorStyle
     }
 
@@ -245,15 +235,13 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
           }}
         />
 
-        <div className="contents" style={contentsStyle}>
-
             {tracks.map(track => 
               <Track 
                 {...track}
                 key={track.id}
-                height={this.state.scale.y}
-                width={this.state.scale.x * trackMax - offset.x}
-                scale={this.state.scale}
+                height={this.props.scale.y}
+                width={this.props.scale.x * trackMax - offset.x}
+                scale={this.props.scale}
                 trackTitleWidth={0}
                 moveBlock={this.moveBlock}
                 moveTargetPosition={this.moveTargetPosition}
@@ -263,48 +251,31 @@ class Timeline extends React.Component<ITimelineProps, ITimelineState> {
               />
             )}
 
-          {this.state.targetPosition &&
+        {this.state.targetPosition &&
           <Playhead 
               position={this.state.targetPosition}
               type={PlayheadType.Target}
-              height={this.state.tracks.length * this.state.scale.y}
-              scale={this.state.scale}
+              height={this.state.tracks.length * this.props.scale.y}
+              scale={this.props.scale}
           />
           }
           
           <Playhead
             position={this.state.currentPosition}
             type={PlayheadType.Current}
-            height={this.state.tracks.length * this.state.scale.y}
-            scale={this.state.scale}
+            height={this.state.tracks.length * this.props.scale.y}
+            scale={this.props.scale}
           />
 
           <UnitMarkers 
-            scale={this.state.scale}
-            width={trackMax * this.state.scale.x}
+            scale={this.props.scale}
+            width={trackMax * this.props.scale.x}
             height={RULER_HEIGHT}
             offset={offset}
             parentWidth={this.props.width}
             setPlayhead={this.setPlayhead}
           />
           
-        </div>
-  
-
-        <div className="controls">
-          <button onClick={(e) => { this.handleZoom({ x: -4, y: 0 }) }}>
-            zoom -
-          </button>
-          <button onClick={(e) => { this.handleZoom({ x: 4, y: 0 }) }}>
-            zoom +
-          </button>
-        </div>
-
-        <div className="debug">
-          <code>
-            {JSON.stringify(this.state)}
-          </code>
-        </div>
 
       </div>
     );
