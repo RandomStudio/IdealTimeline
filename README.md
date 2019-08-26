@@ -24,6 +24,8 @@ Hierarchy of elements:
 
 
 ## Features Roadmap
+
+### Basic timeline with blocks
 - [x] Layers provide concurrent blocks to be arranged
 - [x] Blocks should be movable (update start position)
 - [x] Blocks should be resizable
@@ -32,11 +34,17 @@ Hierarchy of elements:
 - [x] Timeline should be movable by mouse click
 - [x] Timeline should update a POJO for active blocks under playhead
 - [ ] Timeline should be (horizontally) scrollable
+- [ ] Timeline should emit events over a standardised websocket protocol
+
+### Advanced block editing
 - [ ] Blocks should be able to insert (shift later blocks)
 - [ ] Blocks should be movable between layers
-- [ ] Timeline should emit events over a standardised websocket protocol
+
+### Keyframes
 - [ ] It should be possible to add/remove keyframe layers in a block
 - [ ] It should be possible to add/remove keyframes in keyframe layers
+
+### Advanced nestable timelines
 - [ ] Timelines should be nestable
 
 
