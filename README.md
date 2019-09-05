@@ -17,10 +17,11 @@ Currently using:
 ## Design
 
 Hierarchy of elements:
-* Timeline
-    * Track
-       * Block
-           * Keyframes
+* Each *Timeline* has one or more
+    * *Track(s)* which has one or more
+       * *Block(s)* which may have zero, one or more
+           * *Keyframe layers* with one or more
+               * *Keyframe(s)*
 
 
 ## Features Roadmap
