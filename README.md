@@ -1,3 +1,9 @@
+<!--
+  Title: Muti-Purpose JS Timeline
+  Description: Proof of concept for in-browser interactive timeline builder
+  Author: Steve
+  -->
+
 # Muti-Purpose JS Timeline
 
 ***WARNING: THIS IS A PROOF-OF-CONCEPT PROJECT AND NOT YET READY FOR PRODUCTION USE***
