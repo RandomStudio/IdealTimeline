@@ -1,7 +1,5 @@
 <!--
-  Title: Muti-Purpose JS Timeline
-  Description: Proof of concept for in-browser interactive timeline builder
-  Author: Steve
+  Visible: true
   -->
 
 # Muti-Purpose JS Timeline
